@@ -249,6 +249,105 @@ footer{background:#1a1a1a;color:#aaa;}
 #backtop{position:fixed;bottom:90px;right:20px;background:#fff;border:1px solid var(--border);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;z-index:599;box-shadow:var(--shadow);opacity:0;transition:.3s;}
 #backtop.show{opacity:1;}
 
+/* ══════════ SPIN WHEEL SECTION ══════════ */
+.spin-section{background:linear-gradient(135deg,#1a0a00 0%,#3d1200 40%,#1a0a00 100%);padding:40px 16px;position:relative;overflow:hidden;}
+.spin-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(250,83,0,.25) 0%,transparent 70%);pointer-events:none;}
+.spin-inner{max-width:900px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:32px;}
+.spin-title-wrap{text-align:center;}
+.spin-title-wrap h2{font-size:28px;font-weight:900;color:#fff;text-shadow:0 0 20px rgba(250,83,0,.8);}
+.spin-title-wrap p{color:#ffb380;font-size:15px;margin-top:6px;}
+.spin-title-wrap .spin-counter{display:inline-block;background:rgba(250,83,0,.25);border:1px solid rgba(250,83,0,.5);color:#ffb380;font-size:12px;padding:3px 12px;border-radius:20px;margin-top:8px;}
+
+.wheel-container{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;}
+.wheel-pointer{width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:36px solid #fff;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5));z-index:10;position:relative;}
+.wheel-pointer::after{content:'';position:absolute;top:-40px;left:-8px;width:16px;height:16px;background:#fff;border-radius:50%;}
+
+#wheelCanvas{border-radius:50%;box-shadow:0 0 0 8px rgba(250,83,0,.3),0 0 0 16px rgba(250,83,0,.1),0 8px 40px rgba(0,0,0,.6);cursor:pointer;}
+
+.spin-btn-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;}
+#spinBtn{background:linear-gradient(135deg,#fa5300,#ff8c42);color:#fff;border:none;border-radius:50px;padding:14px 48px;font-size:18px;font-weight:900;letter-spacing:.5px;box-shadow:0 4px 20px rgba(250,83,0,.6);transition:all .2s;position:relative;overflow:hidden;}
+#spinBtn::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.15),transparent);border-radius:50px;}
+#spinBtn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 28px rgba(250,83,0,.75);}
+#spinBtn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.spin-note{color:#ff9a5c;font-size:12px;text-align:center;}
+.spin-spins-left{color:#ffcc99;font-size:13px;font-weight:700;}
+
+/* ══════════ WIN MODAL ══════════ */
+#winModal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px);}
+#winModal.show{display:flex;}
+.win-box{background:#fff;border-radius:20px;padding:0;max-width:440px;width:100%;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:popIn .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.win-header{background:linear-gradient(135deg,#fa5300,#ff8c42);padding:28px 24px 20px;text-align:center;position:relative;}
+.win-confetti{font-size:40px;display:flex;justify-content:center;gap:8px;margin-bottom:8px;}
+.win-header h2{color:#fff;font-size:26px;font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,.2);}
+.win-header p{color:rgba(255,255,255,.9);font-size:14px;margin-top:4px;}
+.win-body{padding:24px;}
+
+/* ══════════ COUPON CARD (in modal & page) ══════════ */
+.coupon-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.12);position:relative;}
+.coupon-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;}
+.coupon-card.gold::before{background:linear-gradient(90deg,#f5a623,#ffd700,#f5a623);}
+.coupon-card.orange::before{background:linear-gradient(90deg,#fa5300,#ff8c42,#fa5300);}
+.coupon-card.purple::before{background:linear-gradient(90deg,#764ba2,#a55eea,#764ba2);}
+.coupon-card.blue::before{background:linear-gradient(90deg,#0075ff,#00b4ff,#0075ff);}
+.coupon-card.green::before{background:linear-gradient(90deg,#1aab2a,#56e366,#1aab2a);}
+.coupon-card.red::before{background:linear-gradient(90deg,#e63946,#ff6b81,#e63946);}
+
+.coupon-inner{display:flex;min-height:100px;}
+.coupon-left{padding:16px 18px;display:flex;flex-direction:column;justify-content:center;gap:4px;flex:1;}
+.coupon-logo-row{display:flex;align-items:center;gap:6px;}
+.coupon-logo-row .cl{font-size:18px;font-weight:900;color:var(--orange);font-style:italic;}
+.coupon-type{font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
+.coupon-card.gold .coupon-type{color:#b8860b;}
+.coupon-card.orange .coupon-type{color:var(--orange);}
+.coupon-card.purple .coupon-type{color:#764ba2;}
+.coupon-card.blue .coupon-type{color:#0075ff;}
+.coupon-card.green .coupon-type{color:#1aab2a;}
+.coupon-card.red .coupon-type{color:#e63946;}
+.coupon-title{font-size:22px;font-weight:900;color:#1a1a1a;line-height:1;}
+.coupon-sub{font-size:11px;color:#888;margin-top:1px;}
+.coupon-expires{font-size:10px;color:#aaa;margin-top:4px;}
+.coupon-expires span{color:#e63946;font-weight:700;}
+
+.coupon-divider{width:1px;background:repeating-linear-gradient(to bottom,#ddd 0,#ddd 6px,transparent 6px,transparent 12px);position:relative;flex-shrink:0;}
+.coupon-divider::before,.coupon-divider::after{content:'';position:absolute;width:20px;height:20px;background:#f0f0f0;border-radius:50%;left:-10px;}
+.coupon-divider::before{top:-10px;}
+.coupon-divider::after{bottom:-10px;}
+
+.coupon-right{padding:16px 18px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;min-width:120px;text-align:center;}
+.coupon-code-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;}
+.coupon-code{font-size:13px;font-weight:900;letter-spacing:1.5px;padding:4px 10px;border-radius:5px;font-family:monospace;border:1.5px dashed;}
+.coupon-card.gold .coupon-code{background:#fffbee;color:#b8860b;border-color:#f5a623;}
+.coupon-card.orange .coupon-code{background:#fff3ee;color:var(--orange);border-color:var(--orange);}
+.coupon-card.purple .coupon-code{background:#f8f0ff;color:#764ba2;border-color:#a55eea;}
+.coupon-card.blue .coupon-code{background:#f0f7ff;color:#0075ff;border-color:#0075ff;}
+.coupon-card.green .coupon-code{background:#f0fff3;color:#1aab2a;border-color:#1aab2a;}
+.coupon-card.red .coupon-code{background:#fff0f1;color:#e63946;border-color:#e63946;}
+.copy-btn{font-size:11px;font-weight:700;border:none;border-radius:20px;padding:5px 14px;cursor:pointer;transition:.2s;}
+.coupon-card.gold .copy-btn{background:#f5a623;color:#fff;}
+.coupon-card.orange .copy-btn{background:var(--orange);color:#fff;}
+.coupon-card.purple .copy-btn{background:#764ba2;color:#fff;}
+.coupon-card.blue .copy-btn{background:#0075ff;color:#fff;}
+.coupon-card.green .copy-btn{background:#1aab2a;color:#fff;}
+.coupon-card.red .copy-btn{background:#e63946;color:#fff;}
+.copy-btn:hover{filter:brightness(1.1);}
+
+/* ══════════ COUPON PAGE SECTION ══════════ */
+.coupon-section{max-width:900px;margin:0 auto;padding:0 12px;}
+.coupon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:14px;padding-bottom:8px;}
+@media(max-width:480px){.coupon-grid{grid-template-columns:1fr;}}
+
+/* ══════════ WIN MODAL ACTIONS ══════════ */
+.win-actions{display:flex;gap:10px;margin-top:18px;}
+.win-use-btn{flex:1;background:var(--orange);color:#fff;border:none;border-radius:24px;padding:12px;font-size:14px;font-weight:800;}
+.win-close-btn{background:#f5f5f5;color:#555;border:none;border-radius:24px;padding:12px 20px;font-size:14px;font-weight:700;}
+.win-use-btn:hover{background:var(--orange-dark);}
+.win-close-btn:hover{background:#e8e8e8;}
+
+/* ══════════ SPIN FLOATING BTN ══════════ */
+#spinFloatBtn{position:fixed;bottom:90px;left:20px;background:linear-gradient(135deg,#fa5300,#ff8c42);color:#fff;border-radius:50px;padding:10px 16px;font-size:13px;font-weight:800;border:none;box-shadow:0 4px 16px rgba(250,83,0,.6);z-index:599;cursor:pointer;display:flex;align-items:center;gap:6px;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 4px 16px rgba(250,83,0,.6)}50%{box-shadow:0 4px 28px rgba(250,83,0,.9),0 0 0 6px rgba(250,83,0,.1)}}
+
 /* ══════════ RESPONSIVE ══════════ */
 @media(max-width:900px){
   .banner-section{grid-template-columns:1fr;}
@@ -993,6 +1092,174 @@ footer{background:#1a1a1a;color:#aaa;}
 
 </div>
 
+<!-- ══ GUTSCHEINE SECTION ══ -->
+<div style="max-width:1400px;margin:0 auto;">
+  <div class="section-head" style="padding:0 12px;margin-bottom:10px;margin-top:16px;">
+    <div class="section-head-left">
+      <span style="font-size:22px;">🎟️</span>
+      <span class="section-head-title">Deine Gutscheine</span>
+    </div>
+    <a class="see-all" href="#spinSection">🎡 Mehr gewinnen ›</a>
+  </div>
+</div>
+<div class="coupon-section" style="max-width:1400px;padding:0 12px;">
+  <div class="coupon-grid" id="couponGrid">
+
+    <!-- €5 Gutschein -->
+    <div class="coupon-card green">
+      <div class="coupon-inner">
+        <div class="coupon-left">
+          <div class="coupon-logo-row"><span class="cl">temu</span><span style="font-size:9px;background:#e8f5e9;color:#1aab2a;padding:1px 6px;border-radius:10px;font-weight:700;">EINSTEIGER</span></div>
+          <div class="coupon-type">Rabatt-Gutschein</div>
+          <div class="coupon-title">€5,00</div>
+          <div class="coupon-sub">Mindestbestellwert €20 · Alle Kategorien</div>
+          <div class="coupon-expires">Gültig bis: <span>31. Mai 2026</span></div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-right">
+          <div class="coupon-code-label">Gutscheincode</div>
+          <div class="coupon-code" id="code-1">TEMU5DE</div>
+          <button class="copy-btn" onclick="copyCode('code-1',this)">Kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- €10 Gutschein -->
+    <div class="coupon-card orange">
+      <div class="coupon-inner">
+        <div class="coupon-left">
+          <div class="coupon-logo-row"><span class="cl">temu</span><span style="font-size:9px;background:#fff3ee;color:var(--orange);padding:1px 6px;border-radius:10px;font-weight:700;">BELIEBT</span></div>
+          <div class="coupon-type">Neukunden-Gutschein</div>
+          <div class="coupon-title">€10,00</div>
+          <div class="coupon-sub">Mindestbestellwert €35 · Erste Bestellung</div>
+          <div class="coupon-expires">Gültig bis: <span>15. Juni 2026</span></div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-right">
+          <div class="coupon-code-label">Gutscheincode</div>
+          <div class="coupon-code" id="code-2">NEU10OFF</div>
+          <button class="copy-btn" onclick="copyCode('code-2',this)">Kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- €15 Gutschein -->
+    <div class="coupon-card blue">
+      <div class="coupon-inner">
+        <div class="coupon-left">
+          <div class="coupon-logo-row"><span class="cl">temu</span><span style="font-size:9px;background:#f0f7ff;color:#0075ff;padding:1px 6px;border-radius:10px;font-weight:700;">EXKLUSIV</span></div>
+          <div class="coupon-type">Mode-Gutschein</div>
+          <div class="coupon-title">€15,00</div>
+          <div class="coupon-sub">Nur für Mode-Kategorie · ab €50 Bestellwert</div>
+          <div class="coupon-expires">Gültig bis: <span>30. Juni 2026</span></div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-right">
+          <div class="coupon-code-label">Gutscheincode</div>
+          <div class="coupon-code" id="code-3">MODE15</div>
+          <button class="copy-btn" onclick="copyCode('code-3',this)">Kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- €20 Gutschein -->
+    <div class="coupon-card purple">
+      <div class="coupon-inner">
+        <div class="coupon-left">
+          <div class="coupon-logo-row"><span class="cl">temu</span><span style="font-size:9px;background:#f8f0ff;color:#764ba2;padding:1px 6px;border-radius:10px;font-weight:700;">VIP</span></div>
+          <div class="coupon-type">VIP-Mitglieder Gutschein</div>
+          <div class="coupon-title">€20,00</div>
+          <div class="coupon-sub">Für VIP-Mitglieder · ab €60 Bestellwert</div>
+          <div class="coupon-expires">Gültig bis: <span>31. Juli 2026</span></div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-right">
+          <div class="coupon-code-label">Gutscheincode</div>
+          <div class="coupon-code" id="code-4">VIP20DE</div>
+          <button class="copy-btn" onclick="copyCode('code-4',this)">Kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- €50 Gutschein -->
+    <div class="coupon-card gold">
+      <div class="coupon-inner">
+        <div class="coupon-left">
+          <div class="coupon-logo-row"><span class="cl">temu</span><span style="font-size:9px;background:#fffbee;color:#b8860b;padding:1px 6px;border-radius:10px;font-weight:700;">GOLD</span></div>
+          <div class="coupon-type">Premium-Gutschein</div>
+          <div class="coupon-title">€50,00</div>
+          <div class="coupon-sub">Alle Kategorien · ab €120 Bestellwert</div>
+          <div class="coupon-expires">Gültig bis: <span>31. Aug. 2026</span></div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-right">
+          <div class="coupon-code-label">Gutscheincode</div>
+          <div class="coupon-code" id="code-5">GOLD50</div>
+          <button class="copy-btn" onclick="copyCode('code-5',this)">Kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- €100 Gutschein -->
+    <div class="coupon-card red">
+      <div class="coupon-inner">
+        <div class="coupon-left">
+          <div class="coupon-logo-row"><span class="cl">temu</span><span style="font-size:9px;background:#fff0f1;color:#e63946;padding:1px 6px;border-radius:10px;font-weight:700;">MEGA DEAL</span></div>
+          <div class="coupon-type">Jubiläums-Gutschein</div>
+          <div class="coupon-title">€100,00</div>
+          <div class="coupon-sub">Alle Kategorien · ab €200 Bestellwert</div>
+          <div class="coupon-expires">Gültig bis: <span>01. Sep. 2026</span></div>
+        </div>
+        <div class="coupon-divider"></div>
+        <div class="coupon-right">
+          <div class="coupon-code-label">Gutscheincode</div>
+          <div class="coupon-code" id="code-6">MEGA100</div>
+          <button class="copy-btn" onclick="copyCode('code-6',this)">Kopieren</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ SPIN WHEEL ══ -->
+<div class="spin-section" id="spinSection" style="margin-top:24px;">
+  <div class="spin-inner">
+    <div class="spin-title-wrap">
+      <h2>🎡 Dreh das Glücksrad!</h2>
+      <p>Gewinne Gutscheine im Wert von €5 bis €100 – jeden Tag kostenlos drehen!</p>
+      <span class="spin-counter">🔥 Heute bereits 1.247 Gutscheine gewonnen</span>
+    </div>
+    <div class="wheel-container">
+      <div class="wheel-pointer"></div>
+      <canvas id="wheelCanvas" width="320" height="320"></canvas>
+      <div class="spin-btn-wrap">
+        <button id="spinBtn" onclick="spinWheel()">🎰 JETZT DREHEN!</button>
+        <div class="spin-spins-left" id="spinsLeft">Du hast noch <span id="spinsCount">3</span> Drehungen heute</div>
+        <div class="spin-note">Täglich 3 kostenlose Drehungen · Keine Registrierung nötig</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ WIN MODAL ══ -->
+<div id="winModal">
+  <div class="win-box">
+    <div class="win-header">
+      <div class="win-confetti">🎉 🎊 🥳</div>
+      <h2>Glückwunsch!</h2>
+      <p>Du hast einen Gutschein gewonnen!</p>
+    </div>
+    <div class="win-body">
+      <div id="wonCoupon"></div>
+      <div class="win-actions">
+        <button class="win-use-btn" onclick="useWonCoupon()">🛒 Jetzt einlösen</button>
+        <button class="win-close-btn" onclick="closeWinModal()">Später</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ══ NEWSLETTER ══ -->
 <div class="newsletter">
   <h2>🎁 Exklusive Angebote per E-Mail</h2>
@@ -1055,6 +1322,9 @@ footer{background:#1a1a1a;color:#aaa;}
 <div id="float-cart" onclick="openCart()">
   🛒<div id="float-count">0</div>
 </div>
+
+<!-- ══ SPIN FLOAT BTN ══ -->
+<button id="spinFloatBtn" onclick="document.getElementById('spinSection').scrollIntoView({behavior:'smooth'})">🎡 Drehen &amp; Gewinnen</button>
 
 <!-- ══ BACK TO TOP ══ -->
 <div id="backtop" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</div>
@@ -1166,6 +1436,175 @@ function subscribeNewsletter(){
   if(!inp.value||!inp.value.includes('@')){showToast('⚠️ Bitte gib eine gültige E-Mail ein.');return;}
   showToast('🎁 Danke! Dein 15 %-Gutschein wurde per E-Mail gesendet.');
   inp.value='';
+}
+
+/* ─────────────────────────────────────────
+   SPIN WHEEL
+───────────────────────────────────────── */
+const PRIZES=[
+  {label:'€5',value:5,  color:'#1aab2a',dark:'#138a20',type:'green',code:'WIN5-'+rndStr(),title:'€5,00 Gutschein',sub:'Mindestbestellwert €20'},
+  {label:'€8',value:8,  color:'#0075ff',dark:'#005fcc',type:'blue', code:'WIN8-'+rndStr(),title:'€8,00 Gutschein',sub:'Mindestbestellwert €25'},
+  {label:'€10',value:10, color:'#fa5300',dark:'#d94700',type:'orange',code:'WIN10-'+rndStr(),title:'€10,00 Gutschein',sub:'Mindestbestellwert €35'},
+  {label:'€15',value:15, color:'#764ba2',dark:'#5e3a82',type:'purple',code:'WIN15-'+rndStr(),title:'€15,00 Gutschein',sub:'Mindestbestellwert €45'},
+  {label:'€5',value:5,  color:'#1aab2a',dark:'#138a20',type:'green',code:'WIN5-'+rndStr(),title:'€5,00 Gutschein',sub:'Mindestbestellwert €20'},
+  {label:'€20',value:20, color:'#e63946',dark:'#c0222e',type:'red',  code:'WIN20-'+rndStr(),title:'€20,00 Gutschein',sub:'Mindestbestellwert €60'},
+  {label:'€8',value:8,  color:'#0075ff',dark:'#005fcc',type:'blue', code:'WIN8-'+rndStr(),title:'€8,00 Gutschein',sub:'Mindestbestellwert €25'},
+  {label:'€50',value:50, color:'#f5a623',dark:'#d48a10',type:'gold', code:'WIN50-'+rndStr(),title:'€50,00 Gutschein',sub:'Mindestbestellwert €120'},
+  {label:'€10',value:10, color:'#fa5300',dark:'#d94700',type:'orange',code:'WIN10-'+rndStr(),title:'€10,00 Gutschein',sub:'Mindestbestellwert €35'},
+  {label:'€30',value:30, color:'#764ba2',dark:'#5e3a82',type:'purple',code:'WIN30-'+rndStr(),title:'€30,00 Gutschein',sub:'Mindestbestellwert €80'},
+  {label:'€5',value:5,  color:'#1aab2a',dark:'#138a20',type:'green',code:'WIN5-'+rndStr(),title:'€5,00 Gutschein',sub:'Mindestbestellwert €20'},
+  {label:'€100',value:100,color:'#e63946',dark:'#c0222e',type:'red',  code:'WIN100-'+rndStr(),title:'€100,00 Gutschein',sub:'Mindestbestellwert €200'},
+];
+
+function rndStr(){return Math.random().toString(36).substring(2,8).toUpperCase();}
+
+const NUM=PRIZES.length;
+const ARC=2*Math.PI/NUM;
+let currentAngle=0, spinning=false;
+let spinsLeft=3;
+
+const canvas=document.getElementById('wheelCanvas');
+const ctx=canvas.getContext('2d');
+const cx=canvas.width/2, cy=canvas.height/2, R=canvas.width/2-6;
+
+function drawWheel(rot){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  /* outer ring */
+  ctx.save();
+  ctx.beginPath();ctx.arc(cx,cy,R+4,0,Math.PI*2);
+  ctx.lineWidth=8;
+  const grad=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+  grad.addColorStop(0,'#ffd700');grad.addColorStop(.5,'#fa5300');grad.addColorStop(1,'#ffd700');
+  ctx.strokeStyle=grad;ctx.stroke();ctx.restore();
+
+  for(let i=0;i<NUM;i++){
+    const start=rot+i*ARC, end=rot+(i+1)*ARC;
+    const p=PRIZES[i];
+    /* segment */
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,start,end);ctx.closePath();
+    ctx.fillStyle=p.color;ctx.fill();
+    ctx.strokeStyle=p.dark;ctx.lineWidth=1.5;ctx.stroke();
+    /* text */
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(start+ARC/2);
+    ctx.textAlign='right';
+    ctx.fillStyle='#fff';
+    ctx.font='bold 15px Arial';
+    ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=4;
+    ctx.fillText(p.label,R-10,5);
+    ctx.restore();
+  }
+  /* center circle */
+  ctx.beginPath();ctx.arc(cx,cy,28,0,Math.PI*2);
+  const cg=ctx.createRadialGradient(cx,cy,4,cx,cy,28);
+  cg.addColorStop(0,'#fff');cg.addColorStop(1,'#eee');
+  ctx.fillStyle=cg;ctx.fill();
+  ctx.strokeStyle='#fa5300';ctx.lineWidth=3;ctx.stroke();
+  ctx.fillStyle='#fa5300';ctx.font='bold 11px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.shadowBlur=0;
+  ctx.fillText('temu',cx,cy);
+}
+drawWheel(0);
+
+function spinWheel(){
+  if(spinning||spinsLeft<=0)return;
+  spinning=true;
+  document.getElementById('spinBtn').disabled=true;
+
+  /* weighted random: lower value = higher chance */
+  const weights=[6,5,4,3,6,2,5,1,4,2,6,1];
+  let total=weights.reduce((a,b)=>a+b,0), r=Math.random()*total, pick=0;
+  for(let i=0;i<weights.length;i++){r-=weights[i];if(r<=0){pick=i;break;}}
+
+  const extraSpins=5+Math.floor(Math.random()*4);
+  const segMid=pick*ARC+ARC/2;
+  /* pointer is at top (3π/2), we need segMid to land at top */
+  const target=(extraSpins*2*Math.PI)+(3*Math.PI/2 - segMid - currentAngle%(2*Math.PI) + 2*Math.PI)%(2*Math.PI) + currentAngle;
+
+  const duration=4500+Math.random()*1000;
+  const start=performance.now();
+  const startAngle=currentAngle;
+
+  function frame(now){
+    const elapsed=now-start;
+    const t=Math.min(elapsed/duration,1);
+    const ease=1-Math.pow(1-t,4);
+    const angle=startAngle+(target-startAngle)*ease;
+    drawWheel(angle);
+    if(t<1){requestAnimationFrame(frame);}
+    else{
+      currentAngle=target;
+      spinning=false;
+      spinsLeft--;
+      document.getElementById('spinsCount').textContent=spinsLeft;
+      if(spinsLeft===0){
+        document.getElementById('spinBtn').disabled=true;
+        document.getElementById('spinBtn').textContent='Heute keine Drehungen mehr';
+      } else {
+        document.getElementById('spinBtn').disabled=false;
+      }
+      showWin(PRIZES[pick]);
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+let wonPrize=null;
+function showWin(prize){
+  wonPrize=prize;
+  document.getElementById('wonCoupon').innerHTML=buildCouponHTML(prize);
+  document.getElementById('winModal').classList.add('show');
+  /* add to coupon grid */
+  addWonCoupon(prize);
+}
+function closeWinModal(){document.getElementById('winModal').classList.remove('show');}
+function useWonCoupon(){
+  closeWinModal();
+  showToast('🎉 Gutschein <strong>'+wonPrize.code+'</strong> wurde in deinen Warenkorb eingefügt!');
+}
+
+function buildCouponHTML(prize){
+  const expiry=new Date();expiry.setMonth(expiry.getMonth()+2);
+  const dateStr=expiry.toLocaleDateString('de-DE',{day:'numeric',month:'long',year:'numeric'});
+  return `<div class="coupon-card ${prize.type}">
+    <div class="coupon-inner">
+      <div class="coupon-left">
+        <div class="coupon-logo-row"><span class="cl">temu</span><span style="font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;background:var(--orange-light);color:var(--orange);">🎡 GEWONNEN</span></div>
+        <div class="coupon-type">Glücksrad-Gewinn</div>
+        <div class="coupon-title">${prize.title}</div>
+        <div class="coupon-sub">${prize.sub} · Alle Kategorien</div>
+        <div class="coupon-expires">Gültig bis: <span>${dateStr}</span></div>
+      </div>
+      <div class="coupon-divider"></div>
+      <div class="coupon-right">
+        <div class="coupon-code-label">Dein Code</div>
+        <div class="coupon-code" id="won-code">${prize.code}</div>
+        <button class="copy-btn" onclick="copyCodeDirect('${prize.code}',this)">Kopieren</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function addWonCoupon(prize){
+  const grid=document.getElementById('couponGrid');
+  const div=document.createElement('div');
+  div.innerHTML=buildCouponHTML(prize);
+  div.firstChild.style.animation='popIn .4s cubic-bezier(.34,1.56,.64,1)';
+  grid.prepend(div.firstChild);
+}
+
+/* ── Copy helpers ── */
+function copyCode(id,btn){
+  const code=document.getElementById(id).textContent;
+  copyToClipboard(code,btn);
+}
+function copyCodeDirect(code,btn){copyToClipboard(code,btn);}
+function copyToClipboard(code,btn){
+  navigator.clipboard.writeText(code).catch(()=>{});
+  btn.textContent='✔ Kopiert!';
+  showToast('📋 Code <strong>'+code+'</strong> kopiert!');
+  setTimeout(()=>btn.textContent='Kopieren',2000);
 }
 </script>
 </body>

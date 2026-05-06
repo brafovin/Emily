@@ -1,873 +1,1172 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Temu – Günstig shoppen</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Temu – Günstig, aber nicht billig</title>
+<style>
+:root{
+  --orange:#fa5300;
+  --orange-dark:#d94700;
+  --orange-light:#fff3ee;
+  --yellow:#f5a623;
+  --green:#1aab2a;
+  --blue:#0075ff;
+  --gray:#f5f5f5;
+  --border:#e8e8e8;
+  --text:#1a1a1a;
+  --muted:#767676;
+  --radius:8px;
+  --shadow:0 2px 8px rgba(0,0,0,.08);
+  --shadow-lg:0 6px 24px rgba(0,0,0,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#f0f0f0;color:var(--text);font-size:14px;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:inherit;}
+img{display:block;width:100%;}
 
-    /* ─── HEADER ─── */
-    header {
-      background: #fa5300;
-      padding: 0 16px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 6px rgba(0,0,0,.25);
-    }
-    .header-top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      height: 56px;
-    }
-    .logo {
-      font-size: 28px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: -1px;
-      text-decoration: none;
-      flex-shrink: 0;
-    }
-    .search-bar {
-      flex: 1;
-      display: flex;
-      background: #fff;
-      border-radius: 24px;
-      overflow: hidden;
-      height: 38px;
-    }
-    .search-bar input {
-      flex: 1;
-      border: none;
-      outline: none;
-      padding: 0 14px;
-      font-size: 14px;
-    }
-    .search-bar button {
-      background: #fa5300;
-      border: none;
-      padding: 0 16px;
-      cursor: pointer;
-      font-size: 18px;
-      color: #fff;
-    }
-    .header-icons {
-      display: flex;
-      gap: 18px;
-      color: #fff;
-    }
-    .header-icons span {
-      font-size: 22px;
-      cursor: pointer;
-    }
-    .header-nav {
-      display: flex;
-      gap: 24px;
-      height: 36px;
-      align-items: center;
-    }
-    .header-nav a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 13px;
-      opacity: .9;
-      white-space: nowrap;
-    }
-    .header-nav a:hover { opacity: 1; text-decoration: underline; }
+/* ══════════ TOP BAR ══════════ */
+.topbar{background:#3d1a00;color:#ffd6b8;font-size:12px;text-align:center;padding:6px 16px;display:flex;justify-content:space-between;align-items:center;}
+.topbar-links{display:flex;gap:16px;}
+.topbar-links a{color:#ffd6b8;font-size:12px;}
+.topbar-links a:hover{color:#fff;}
+.topbar-center{flex:1;text-align:center;}
+.topbar-promo{animation:shimmer 3s linear infinite;}
+@keyframes shimmer{0%,100%{opacity:1}50%{opacity:.75}}
 
-    /* ─── BANNER ─── */
-    .banner {
-      background: linear-gradient(135deg, #ff6a00 0%, #fa5300 40%, #c93500 100%);
-      color: #fff;
-      text-align: center;
-      padding: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: .4px;
-    }
-    .banner span { background: #fff; color: #fa5300; padding: 2px 8px; border-radius: 4px; margin-left: 6px; font-weight: 900; }
+/* ══════════ HEADER ══════════ */
+header{background:#fff;border-bottom:2px solid var(--orange);position:sticky;top:0;z-index:500;box-shadow:var(--shadow);}
+.header-main{display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1400px;margin:0 auto;}
+.logo-wrap{display:flex;align-items:center;gap:2px;flex-shrink:0;}
+.logo-t{font-size:30px;font-weight:900;color:var(--orange);font-style:italic;}
+.logo-sub{font-size:10px;color:var(--muted);margin-top:14px;}
 
-    /* ─── PROMO STRIP ─── */
-    .promo-strip {
-      background: #fff9f5;
-      border-bottom: 1px solid #ffe0cc;
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      padding: 8px 16px;
-      flex-wrap: wrap;
-    }
-    .promo-strip div {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: #555;
-    }
-    .promo-strip div span.icon { font-size: 18px; }
+.search-wrap{flex:1;position:relative;}
+.search-box{display:flex;border:2px solid var(--orange);border-radius:24px;overflow:hidden;height:42px;}
+.search-box input{flex:1;border:none;outline:none;padding:0 16px;font-size:14px;color:var(--text);}
+.search-box input::placeholder{color:#aaa;}
+.search-box select{border:none;border-left:1px solid #ddd;padding:0 10px;background:#fafafa;color:#555;font-size:13px;outline:none;cursor:pointer;}
+.search-btn{background:var(--orange);border:none;padding:0 20px;color:#fff;font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.search-btn:hover{background:var(--orange-dark);}
 
-    /* ─── CATEGORY BAR ─── */
-    .category-bar {
-      background: #fff;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      border-bottom: 2px solid #f0f0f0;
-      padding: 0 8px;
-    }
-    .category-bar::-webkit-scrollbar { height: 0; }
-    .cat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 10px 16px;
-      cursor: pointer;
-      white-space: nowrap;
-      font-size: 12px;
-      color: #555;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      flex-shrink: 0;
-    }
-    .cat-item:hover, .cat-item.active { color: #fa5300; border-bottom-color: #fa5300; }
-    .cat-item .cat-icon { font-size: 22px; margin-bottom: 2px; }
+.header-actions{display:flex;gap:6px;flex-shrink:0;}
+.action-btn{display:flex;flex-direction:column;align-items:center;background:none;border:none;padding:4px 10px;color:#555;font-size:11px;gap:2px;border-radius:6px;transition:background .2s;}
+.action-btn:hover{background:var(--gray);}
+.action-btn .icon{font-size:20px;}
+.action-btn.cart-btn{background:var(--orange);color:#fff;border-radius:8px;position:relative;}
+.action-btn.cart-btn:hover{background:var(--orange-dark);}
+.cart-badge{position:absolute;top:0;right:4px;background:#fff;color:var(--orange);border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;}
 
-    /* ─── HERO SECTION ─── */
-    .hero {
-      background: linear-gradient(to right, #fff5f0, #ffe8db);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 40px;
-      margin: 12px;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .hero-text h1 { font-size: 28px; color: #c93500; font-weight: 900; }
-    .hero-text p { font-size: 15px; color: #666; margin: 6px 0 16px; }
-    .btn-orange {
-      background: #fa5300;
-      color: #fff;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 24px;
-      font-size: 14px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .btn-orange:hover { background: #e04a00; }
-    .hero-badges { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-    .badge {
-      background: #fa5300;
-      color: #fff;
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .badge.yellow { background: #f5a623; }
-    .badge.green  { background: #27ae60; }
-    .hero-image { font-size: 90px; filter: drop-shadow(2px 4px 8px rgba(0,0,0,.15)); }
+/* ══════════ NAV ══════════ */
+.main-nav{background:#fff;border-top:1px solid var(--border);overflow-x:auto;}
+.main-nav::-webkit-scrollbar{height:0;}
+.nav-inner{display:flex;max-width:1400px;margin:0 auto;padding:0 8px;}
+.nav-item{padding:10px 14px;white-space:nowrap;font-size:13px;color:#444;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:4px;}
+.nav-item:hover,.nav-item.active{color:var(--orange);border-bottom-color:var(--orange);}
+.nav-item.hot::after{content:"HOT";background:var(--orange);color:#fff;font-size:9px;padding:1px 4px;border-radius:3px;font-weight:700;}
 
-    /* ─── SECTION TITLE ─── */
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 16px 8px;
-    }
-    .section-title h2 { font-size: 18px; font-weight: 800; }
-    .section-title a { font-size: 13px; color: #fa5300; text-decoration: none; }
+/* ══════════ DELIVERY BAR ══════════ */
+.delivery-bar{background:linear-gradient(90deg,#fff8f0,#fff3e8);border-bottom:1px solid #ffe4cc;padding:6px 16px;display:flex;justify-content:center;gap:32px;flex-wrap:wrap;}
+.d-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#555;}
+.d-icon{font-size:16px;}
+.d-bold{font-weight:700;color:var(--orange);}
 
-    /* ─── PRODUCT GRID ─── */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 10px;
-      padding: 0 12px 20px;
-    }
+/* ══════════ BANNER SLIDER ══════════ */
+.banner-section{max-width:1400px;margin:12px auto;padding:0 12px;display:grid;grid-template-columns:2fr 1fr;gap:10px;}
+.banner-main{border-radius:12px;overflow:hidden;position:relative;cursor:pointer;}
+.banner-slide{display:none;height:220px;align-items:center;padding:28px 36px;gap:20px;}
+.banner-slide.active{display:flex;}
+.banner-slide-1{background:linear-gradient(135deg,#fa5300 0%,#ff8c42 50%,#ffd194 100%);}
+.banner-slide-2{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);}
+.banner-slide-3{background:linear-gradient(135deg,#2d6a4f 0%,#40916c 50%,#74c69d 100%);}
+.banner-text{flex:1;}
+.banner-tag{display:inline-block;background:rgba(255,255,255,.25);color:#fff;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:8px;}
+.banner-title{font-size:26px;font-weight:900;color:#fff;line-height:1.2;text-shadow:0 2px 4px rgba(0,0,0,.2);}
+.banner-sub{color:rgba(255,255,255,.85);font-size:14px;margin:6px 0 14px;}
+.banner-cta{background:#fff;color:var(--orange);border:none;padding:9px 22px;border-radius:20px;font-size:13px;font-weight:800;}
+.banner-cta.dark{color:#1a1a2e;}
+.banner-cta.green-btn{color:#2d6a4f;}
+.banner-img{font-size:80px;filter:drop-shadow(2px 4px 12px rgba(0,0,0,.2));flex-shrink:0;}
+.banner-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:.2s;}
+.dot.active{background:#fff;width:20px;border-radius:4px;}
 
-    /* ─── PRODUCT CARD ─── */
-    .product-card {
-      background: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: box-shadow .2s, transform .2s;
-      position: relative;
-    }
-    .product-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.13); transform: translateY(-2px); }
+.banner-side{display:flex;flex-direction:column;gap:10px;}
+.side-banner{border-radius:10px;padding:18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:filter .2s;}
+.side-banner:hover{filter:brightness(1.05);}
+.side-banner-1{background:linear-gradient(135deg,#667eea,#764ba2);}
+.side-banner-2{background:linear-gradient(135deg,#f093fb,#f5576c);}
+.side-text h3{font-size:15px;font-weight:800;color:#fff;}
+.side-text p{font-size:11px;color:rgba(255,255,255,.8);margin:3px 0 8px;}
+.side-btn{background:rgba(255,255,255,.25);color:#fff;border:1px solid rgba(255,255,255,.5);padding:5px 14px;border-radius:16px;font-size:12px;font-weight:700;}
+.side-icon{font-size:44px;filter:drop-shadow(1px 2px 6px rgba(0,0,0,.2));}
 
-    .product-img-wrap {
-      position: relative;
-      width: 100%;
-      padding-top: 100%;
-      background: #f9f9f9;
-      overflow: hidden;
-    }
-    .product-img-wrap .product-emoji {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 72px;
-    }
-    /* Special white pants product gets a CSS illustration */
-    .pants-illustration {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(160deg, #f0f0f0 0%, #e8e8e8 100%);
-    }
-    .pants-svg { width: 65%; height: 65%; }
+/* ══════════ FLASH SALE ══════════ */
+.flash-section{max-width:1400px;margin:0 auto 4px;padding:0 12px;}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.section-head-left{display:flex;align-items:center;gap:10px;}
+.section-head-title{font-size:18px;font-weight:900;color:var(--text);}
+.countdown{display:flex;align-items:center;gap:4px;background:#1a1a1a;border-radius:6px;padding:4px 10px;}
+.countdown-label{color:#aaa;font-size:11px;}
+.time-block{background:var(--orange);color:#fff;font-size:14px;font-weight:900;padding:2px 7px;border-radius:4px;min-width:26px;text-align:center;}
+.time-sep{color:#fff;font-weight:900;}
+.see-all{color:var(--orange);font-size:13px;font-weight:600;display:flex;align-items:center;gap:2px;}
 
-    .discount-badge {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: #fa5300;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 900;
-      padding: 2px 7px;
-      border-radius: 4px;
-    }
-    .wishlist-btn {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      background: rgba(255,255,255,.85);
-      border: none;
-      border-radius: 50%;
-      width: 28px;
-      height: 28px;
-      font-size: 15px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .wishlist-btn:hover { background: #fff; }
+/* ══════════ SCROLL ROW ══════════ */
+.scroll-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;}
+.scroll-row::-webkit-scrollbar{height:4px;}
+.scroll-row::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px;}
 
-    .product-info { padding: 8px 10px 10px; }
-    .product-name {
-      font-size: 13px;
-      color: #333;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      line-height: 1.35;
-      min-height: 35px;
-    }
-    .product-name.featured { font-weight: 700; font-size: 14px; }
-    .price-row { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
-    .price-now { font-size: 17px; font-weight: 900; color: #fa5300; }
-    .price-now.featured { font-size: 20px; }
-    .price-old { font-size: 12px; color: #aaa; text-decoration: line-through; }
-    .sold-bar-wrap { margin-top: 6px; }
-    .sold-label { font-size: 10px; color: #888; margin-bottom: 2px; }
-    .sold-bar { background: #f0f0f0; border-radius: 4px; height: 5px; overflow: hidden; }
-    .sold-fill { background: linear-gradient(90deg, #fa5300, #f5a623); height: 100%; border-radius: 4px; }
-    .stars { color: #f5a623; font-size: 11px; margin-top: 4px; }
-    .add-cart-btn {
-      width: 100%;
-      margin-top: 8px;
-      background: #fa5300;
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 7px 0;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .add-cart-btn:hover { background: #e04a00; }
-    .free-ship { font-size: 10px; color: #27ae60; font-weight: 700; margin-top: 4px; }
+/* ══════════ PRODUCT CARD ══════════ */
+.pcard{background:#fff;border-radius:var(--radius);overflow:hidden;flex-shrink:0;width:180px;cursor:pointer;transition:box-shadow .2s,transform .2s;position:relative;}
+.pcard:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px);}
+.pcard-grid{width:100%;}
 
-    /* ─── FEATURED PRODUCT (PANTS) ─── */
-    .featured-card {
-      background: #fff;
-      border-radius: 12px;
-      margin: 0 12px 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(250,83,0,.15);
-      border: 2px solid #fa5300;
-      cursor: pointer;
-      transition: box-shadow .2s;
-    }
-    .featured-card:hover { box-shadow: 0 8px 28px rgba(250,83,0,.25); }
-    .featured-inner {
-      display: flex;
-      gap: 0;
-    }
-    .featured-img {
-      width: 180px;
-      min-height: 180px;
-      background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      position: relative;
-    }
-    .featured-img svg { width: 110px; height: 140px; }
-    .featured-label {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: #fa5300;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 900;
-      padding: 3px 10px;
-      border-radius: 4px;
-    }
-    .featured-details {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .featured-details h3 { font-size: 16px; font-weight: 800; color: #222; line-height: 1.4; }
-    .featured-details .desc { font-size: 12px; color: #777; margin: 6px 0 10px; line-height: 1.5; }
-    .featured-price-big { font-size: 28px; font-weight: 900; color: #fa5300; }
-    .featured-price-old { font-size: 13px; color: #aaa; text-decoration: line-through; margin-left: 8px; }
-    .feature-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
-    .feature-tag {
-      background: #fff3ee;
-      color: #fa5300;
-      border: 1px solid #ffc9a8;
-      border-radius: 12px;
-      font-size: 11px;
-      padding: 2px 8px;
-    }
-    .featured-add-btn {
-      background: #fa5300;
-      color: #fff;
-      border: none;
-      border-radius: 24px;
-      padding: 10px 28px;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      align-self: flex-start;
-      margin-top: 4px;
-    }
-    .featured-add-btn:hover { background: #e04a00; }
+.pcard-img{position:relative;padding-top:100%;background:#f8f8f8;overflow:hidden;}
+.pcard-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:70px;transition:transform .3s;}
+.pcard:hover .pcard-emoji{transform:scale(1.08);}
+.pcard-discount{position:absolute;top:6px;left:6px;background:var(--orange);color:#fff;font-size:10px;font-weight:900;padding:2px 6px;border-radius:4px;z-index:2;}
+.pcard-new{position:absolute;top:6px;left:6px;background:#0075ff;color:#fff;font-size:10px;font-weight:900;padding:2px 6px;border-radius:4px;z-index:2;}
+.pcard-wish{position:absolute;top:6px;right:6px;background:rgba(255,255,255,.9);border:none;border-radius:50%;width:28px;height:28px;font-size:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.15);z-index:2;}
+.pcard-sold{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.55);color:#fff;font-size:10px;padding:3px 6px;display:flex;align-items:center;gap:4px;}
+.sold-bar-mini{flex:1;height:4px;background:rgba(255,255,255,.3);border-radius:2px;overflow:hidden;}
+.sold-fill-mini{height:100%;background:linear-gradient(90deg,#f5a623,#fa5300);border-radius:2px;}
 
-    /* ─── TOAST ─── */
-    #toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: #333;
-      color: #fff;
-      padding: 10px 24px;
-      border-radius: 24px;
-      font-size: 14px;
-      transition: transform .3s;
-      z-index: 9999;
-      pointer-events: none;
-    }
-    #toast.show { transform: translateX(-50%) translateY(0); }
+.pcard-body{padding:8px 10px 10px;}
+.pcard-name{font-size:12.5px;color:#333;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:35px;}
+.pcard-stars{display:flex;align-items:center;gap:3px;margin-top:4px;}
+.stars-gold{color:#f5a623;font-size:11px;}
+.stars-count{font-size:10px;color:#aaa;}
+.pcard-prices{display:flex;align-items:baseline;gap:5px;margin-top:3px;}
+.price-current{font-size:16px;font-weight:900;color:var(--orange);}
+.price-original{font-size:11px;color:#bbb;text-decoration:line-through;}
+.pcard-ship{font-size:10px;color:var(--green);font-weight:600;margin-top:2px;}
+.pcard-btn{width:100%;margin-top:7px;background:var(--orange);color:#fff;border:none;border-radius:20px;padding:7px;font-size:12px;font-weight:700;transition:background .2s;}
+.pcard-btn:hover{background:var(--orange-dark);}
+.pcard-colors{display:flex;gap:4px;margin-top:5px;}
+.color-dot{width:14px;height:14px;border-radius:50%;border:1.5px solid #ddd;cursor:pointer;}
+.color-dot.active{border-color:var(--orange);}
 
-    /* ─── FOOTER ─── */
-    footer {
-      background: #222;
-      color: #aaa;
-      padding: 24px 20px;
-      text-align: center;
-      font-size: 12px;
-      margin-top: 24px;
-    }
-    footer a { color: #fa5300; text-decoration: none; }
-    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+/* ══════════ AUDIENCE SECTIONS ══════════ */
+.audience-section{max-width:1400px;margin:16px auto;padding:0 12px;}
+.audience-header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:10px 10px 0 0;margin-bottom:0;}
+.audience-header.senior{background:linear-gradient(135deg,#667eea,#764ba2);}
+.audience-header.young{background:linear-gradient(135deg,#f093fb,#f5576c);}
+.audience-header h2{font-size:20px;font-weight:900;color:#fff;}
+.audience-header p{font-size:13px;color:rgba(255,255,255,.85);margin-top:2px;}
+.audience-header .aud-icon{font-size:42px;}
+.aud-body{background:#fff;border-radius:0 0 10px 10px;padding:14px;box-shadow:var(--shadow);}
 
-    /* ─── CART BUBBLE ─── */
-    #cart-bubble {
-      position: fixed;
-      bottom: 24px;
-      right: 20px;
-      background: #fa5300;
-      color: #fff;
-      border-radius: 50%;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 4px 14px rgba(250,83,0,.5);
-      cursor: pointer;
-      z-index: 200;
-    }
-    #cart-count {
-      position: absolute;
-      top: -4px;
-      right: -4px;
-      background: #fff;
-      color: #fa5300;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      font-size: 11px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* ══════════ PRODUCT GRID (2-col on mobile) ══════════ */
+.grid-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;padding:0 12px 8px;max-width:1400px;margin:0 auto;}
 
-    @media (max-width: 500px) {
-      .hero { padding: 18px 16px; flex-direction: column; text-align: center; }
-      .hero-image { font-size: 60px; }
-      .featured-inner { flex-direction: column; }
-      .featured-img { width: 100%; min-height: 160px; }
-    }
-  </style>
+/* ══════════ TRUST BANNER ══════════ */
+.trust-banner{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px;display:flex;justify-content:center;gap:0;max-width:100%;overflow-x:auto;margin:16px 0;}
+.trust-item{display:flex;flex-direction:column;align-items:center;padding:0 28px;border-right:1px solid var(--border);gap:4px;flex-shrink:0;}
+.trust-item:last-child{border-right:none;}
+.trust-icon{font-size:28px;}
+.trust-label{font-size:12px;font-weight:700;color:#333;}
+.trust-sub{font-size:10px;color:var(--muted);text-align:center;}
+
+/* ══════════ FEATURED WHITE PANTS ══════════ */
+.featured-wrap{max-width:1400px;margin:0 auto 4px;padding:0 12px;}
+.featured-product{background:#fff;border-radius:12px;overflow:hidden;display:flex;box-shadow:0 4px 20px rgba(250,83,0,.18);border:2px solid var(--orange);cursor:pointer;transition:box-shadow .2s;}
+.featured-product:hover{box-shadow:0 8px 32px rgba(250,83,0,.28);}
+.fp-image-section{width:240px;min-height:240px;background:linear-gradient(145deg,#f7f7f7,#ececec);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;padding:16px;}
+.fp-badge{position:absolute;top:12px;left:12px;background:var(--orange);color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:5px;}
+.fp-badge-new{position:absolute;top:12px;right:12px;background:var(--green);color:#fff;font-size:11px;font-weight:900;padding:4px 10px;border-radius:5px;}
+
+.pants-svg-big{width:130px;height:170px;}
+.fp-details{padding:20px 24px;display:flex;flex-direction:column;justify-content:center;flex:1;}
+.fp-category{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
+.fp-title{font-size:20px;font-weight:900;color:var(--text);margin:6px 0 4px;line-height:1.3;}
+.fp-subtitle{font-size:13px;color:var(--muted);margin-bottom:12px;}
+.fp-rating{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.fp-stars{color:#f5a623;font-size:14px;}
+.fp-rating-num{font-weight:700;font-size:14px;}
+.fp-rating-count{color:var(--muted);font-size:12px;}
+.fp-verified{background:#e8f5e9;color:var(--green);font-size:11px;padding:2px 8px;border-radius:12px;font-weight:700;}
+.fp-price-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;}
+.fp-price{font-size:32px;font-weight:900;color:var(--orange);}
+.fp-price-old{font-size:16px;color:#bbb;text-decoration:line-through;}
+.fp-save{background:#fff3ee;color:var(--orange);font-size:12px;font-weight:700;padding:2px 8px;border-radius:4px;}
+.fp-features{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px;}
+.fp-feat{background:#f8f8f8;border:1px solid var(--border);border-radius:20px;font-size:11px;padding:3px 10px;color:#555;display:flex;align-items:center;gap:3px;}
+.fp-sizes{display:flex;gap:6px;margin-bottom:14px;align-items:center;}
+.fp-sizes span{font-size:12px;color:var(--muted);margin-right:4px;}
+.size-btn{border:1.5px solid var(--border);background:#fff;border-radius:5px;padding:4px 10px;font-size:12px;cursor:pointer;transition:.2s;}
+.size-btn:hover,.size-btn.active{border-color:var(--orange);color:var(--orange);background:var(--orange-light);}
+.fp-actions{display:flex;gap:10px;}
+.fp-add-btn{background:var(--orange);color:#fff;border:none;border-radius:24px;padding:11px 28px;font-size:14px;font-weight:800;transition:.2s;}
+.fp-add-btn:hover{background:var(--orange-dark);}
+.fp-wish-btn{background:#fff;border:2px solid var(--border);border-radius:24px;padding:11px 16px;font-size:18px;transition:.2s;}
+.fp-wish-btn:hover{border-color:var(--orange);}
+.fp-delivery{font-size:12px;color:var(--green);font-weight:600;margin-top:10px;display:flex;align-items:center;gap:4px;}
+
+/* ══════════ TABS ══════════ */
+.tabs-wrap{max-width:1400px;margin:0 auto;padding:0 12px 8px;}
+.tabs{display:flex;background:#fff;border-radius:8px;overflow:hidden;border:1px solid var(--border);}
+.tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;border:none;background:none;}
+.tab.active{background:var(--orange);color:#fff;}
+.tab:hover:not(.active){background:var(--orange-light);color:var(--orange);}
+
+/* ══════════ NEWSLETTER ══════════ */
+.newsletter{background:linear-gradient(135deg,#fa5300,#ff8c42);padding:28px 20px;text-align:center;margin:16px 0;}
+.newsletter h2{color:#fff;font-size:22px;font-weight:900;margin-bottom:6px;}
+.newsletter p{color:rgba(255,255,255,.85);font-size:14px;margin-bottom:16px;}
+.nl-form{display:flex;max-width:420px;margin:0 auto;gap:0;border-radius:24px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.2);}
+.nl-form input{flex:1;border:none;outline:none;padding:12px 18px;font-size:14px;}
+.nl-btn{background:#1a1a1a;color:#fff;border:none;padding:12px 22px;font-size:14px;font-weight:700;cursor:pointer;}
+.nl-btn:hover{background:#333;}
+.nl-note{color:rgba(255,255,255,.7);font-size:11px;margin-top:8px;}
+
+/* ══════════ FOOTER ══════════ */
+footer{background:#1a1a1a;color:#aaa;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;padding:32px 40px;max-width:1400px;margin:0 auto;}
+.footer-brand .logo-f{font-size:26px;font-weight:900;color:var(--orange);font-style:italic;}
+.footer-brand p{font-size:13px;line-height:1.6;margin-top:10px;max-width:220px;}
+.footer-col h4{color:#fff;font-size:14px;font-weight:700;margin-bottom:12px;}
+.footer-col a{display:block;color:#888;font-size:13px;margin-bottom:8px;transition:.2s;}
+.footer-col a:hover{color:var(--orange);}
+.footer-payments{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.pay-badge{background:#2a2a2a;border-radius:5px;padding:4px 10px;font-size:11px;color:#ccc;border:1px solid #3a3a3a;}
+.footer-bottom{border-top:1px solid #2a2a2a;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;max-width:1400px;margin:0 auto;}
+.footer-bottom p{font-size:12px;color:#666;}
+.footer-flags{display:flex;gap:8px;font-size:18px;}
+
+/* ══════════ FLOATING CART ══════════ */
+#float-cart{position:fixed;bottom:24px;right:20px;background:var(--orange);color:#fff;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 20px rgba(250,83,0,.6);cursor:pointer;z-index:600;transition:transform .2s;}
+#float-cart:hover{transform:scale(1.1);}
+#float-count{position:absolute;top:-3px;right:-3px;background:#fff;color:var(--orange);border-radius:50%;width:20px;height:20px;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+
+/* ══════════ TOAST ══════════ */
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:24px;font-size:13px;opacity:0;transition:all .3s;z-index:700;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow-lg);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast .t-green{color:#5ef77e;}
+
+/* ══════════ BACK TO TOP ══════════ */
+#backtop{position:fixed;bottom:90px;right:20px;background:#fff;border:1px solid var(--border);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;z-index:599;box-shadow:var(--shadow);opacity:0;transition:.3s;}
+#backtop.show{opacity:1;}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(max-width:900px){
+  .banner-section{grid-template-columns:1fr;}
+  .banner-side{flex-direction:row;}
+  .side-banner{flex:1;}
+  .footer-top{grid-template-columns:1fr 1fr;gap:20px;padding:24px 16px;}
+  .featured-product{flex-direction:column;}
+  .fp-image-section{width:100%;min-height:200px;}
+}
+@media(max-width:600px){
+  .header-main{padding:8px 10px;}
+  .logo-t{font-size:24px;}
+  .topbar-links{display:none;}
+  .search-box select{display:none;}
+  .banner-slide{height:160px;padding:16px;}
+  .banner-title{font-size:18px;}
+  .banner-img{font-size:55px;}
+  .footer-top{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .trust-item{padding:0 16px;}
+  .grid-products{grid-template-columns:repeat(2,1fr);}
+  .side-banner{flex:none;width:100%;}
+  .banner-side{flex-direction:column;}
+  .fp-price{font-size:26px;}
+  .fp-actions{flex-wrap:wrap;}
+}
+</style>
 </head>
 <body>
 
-<!-- ═══════════════ HEADER ═══════════════ -->
+<!-- ══ TOP BAR ══ -->
+<div class="topbar">
+  <div class="topbar-links">
+    <a href="#">Hilfe</a>
+    <a href="#">App herunterladen</a>
+    <a href="#">Verkäufer werden</a>
+  </div>
+  <div class="topbar-center">
+    <span class="topbar-promo">🎁 Neu-Kunden Rabatt: 30 % auf die erste Bestellung &nbsp;|&nbsp; Code: <strong>TEMU30</strong></span>
+  </div>
+  <div class="topbar-links">
+    <a href="#">🇩🇪 DE</a>
+    <a href="#">€ EUR</a>
+    <a href="#">Konto</a>
+  </div>
+</div>
+
+<!-- ══ HEADER ══ -->
 <header>
-  <div class="header-top">
-    <a class="logo" href="#">temu</a>
-    <div class="search-bar">
-      <input type="text" placeholder="Artikel suchen..." />
-      <button>🔍</button>
+  <div class="header-main">
+    <div class="logo-wrap">
+      <span class="logo-t">temu</span>
     </div>
-    <div class="header-icons">
-      <span title="Anmelden">👤</span>
-      <span title="Wunschliste">🤍</span>
-      <span title="Warenkorb" onclick="openCart()">🛒</span>
+    <div class="search-wrap">
+      <div class="search-box">
+        <input type="text" placeholder="Suche nach Produkten, Marken und mehr …"/>
+        <select><option>Alle</option><option>Mode</option><option>Elektronik</option><option>Haushalt</option><option>Beauty</option></select>
+        <button class="search-btn">🔍</button>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="action-btn"><span class="icon">👤</span>Konto</button>
+      <button class="action-btn"><span class="icon">❤️</span>Wunschliste</button>
+      <button class="action-btn cart-btn" onclick="openCart()">
+        <span class="icon">🛒</span>Warenkorb
+        <div class="cart-badge" id="cart-count">0</div>
+      </button>
     </div>
   </div>
-  <nav class="header-nav">
-    <a href="#">Alle Kategorien</a>
-    <a href="#">Flash Sale ⚡</a>
-    <a href="#">Neu eingetroffen</a>
-    <a href="#">Mode</a>
-    <a href="#">Elektronik</a>
-    <a href="#">Haushalt</a>
-    <a href="#">Beauty</a>
-    <a href="#">Sport</a>
-    <a href="#">Spielzeug</a>
-    <a href="#">Gutscheine</a>
-  </nav>
 </header>
 
-<!-- ═══════════════ BANNER ═══════════════ -->
-<div class="banner">
-  🎉 Kostenloser Versand ab 15 € Bestellwert &nbsp;|&nbsp; Bis zu 90 % Rabatt &nbsp;|&nbsp; 30 Tage Rückgabe
-  <span>Jetzt shoppen</span>
+<!-- ══ NAV ══ -->
+<div class="main-nav">
+  <div class="nav-inner">
+    <div class="nav-item active">🏠 Startseite</div>
+    <div class="nav-item hot">⚡ Flash Sale</div>
+    <div class="nav-item">👗 Damenmode</div>
+    <div class="nav-item">👔 Herrenmode</div>
+    <div class="nav-item">👶 Kinder</div>
+    <div class="nav-item">📱 Elektronik</div>
+    <div class="nav-item">🏡 Haushalt</div>
+    <div class="nav-item">🌿 Garten</div>
+    <div class="nav-item">💄 Beauty</div>
+    <div class="nav-item">🏋️ Sport</div>
+    <div class="nav-item">🐾 Haustiere</div>
+    <div class="nav-item">🎮 Spielzeug</div>
+    <div class="nav-item">🎒 Taschen</div>
+    <div class="nav-item">💊 Gesundheit</div>
+    <div class="nav-item">✈️ Reise</div>
+  </div>
 </div>
 
-<!-- ═══════════════ PROMO STRIP ═══════════════ -->
-<div class="promo-strip">
-  <div><span class="icon">🚚</span> Kostenloser Versand</div>
-  <div><span class="icon">🔒</span> Sicheres Bezahlen</div>
-  <div><span class="icon">↩️</span> 30 Tage Rückgabe</div>
-  <div><span class="icon">⭐</span> Millionen Bewertungen</div>
-  <div><span class="icon">💳</span> Ratenzahlung möglich</div>
+<!-- ══ DELIVERY BAR ══ -->
+<div class="delivery-bar">
+  <div class="d-item"><span class="d-icon">🚚</span><span class="d-bold">Kostenloser Versand</span>&nbsp;ab 15 €</div>
+  <div class="d-item"><span class="d-icon">📦</span>Lieferung in <span class="d-bold">&nbsp;7–15 Tagen</span></div>
+  <div class="d-item"><span class="d-icon">↩️</span><span class="d-bold">90 Tage</span>&nbsp;Rückgabe</div>
+  <div class="d-item"><span class="d-icon">🔒</span>SSL-gesichertes&nbsp;<span class="d-bold">Bezahlen</span></div>
+  <div class="d-item"><span class="d-icon">⭐</span>Über <span class="d-bold">&nbsp;100 Mio.</span>&nbsp;Bewertungen</div>
+  <div class="d-item"><span class="d-icon">🇩🇪</span>Kundenservice auf&nbsp;<span class="d-bold">Deutsch</span></div>
 </div>
 
-<!-- ═══════════════ CATEGORY BAR ═══════════════ -->
-<div class="category-bar">
-  <div class="cat-item active"><span class="cat-icon">🏠</span>Start</div>
-  <div class="cat-item"><span class="cat-icon">👗</span>Mode</div>
-  <div class="cat-item"><span class="cat-icon">👟</span>Schuhe</div>
-  <div class="cat-item"><span class="cat-icon">💄</span>Beauty</div>
-  <div class="cat-item"><span class="cat-icon">📱</span>Elektronik</div>
-  <div class="cat-item"><span class="cat-icon">🏡</span>Haushalt</div>
-  <div class="cat-item"><span class="cat-icon">🌿</span>Garten</div>
-  <div class="cat-item"><span class="cat-icon">🎮</span>Spielzeug</div>
-  <div class="cat-item"><span class="cat-icon">🐾</span>Haustiere</div>
-  <div class="cat-item"><span class="cat-icon">🏋️</span>Sport</div>
-  <div class="cat-item"><span class="cat-icon">🍳</span>Küche</div>
-  <div class="cat-item"><span class="cat-icon">🎒</span>Taschen</div>
-</div>
-
-<!-- ═══════════════ HERO ═══════════════ -->
-<div class="hero">
-  <div class="hero-text">
-    <h1>Bis zu 90 % Rabatt 🔥</h1>
-    <p>Millionen Produkte direkt vom Hersteller</p>
-    <button class="btn-orange">Jetzt entdecken</button>
-    <div class="hero-badges">
-      <span class="badge">⚡ Flash Sale</span>
-      <span class="badge yellow">🎁 Täglich neue Deals</span>
-      <span class="badge green">✅ Kostenloser Versand</span>
+<!-- ══ BANNER ══ -->
+<div class="banner-section">
+  <div class="banner-main">
+    <div class="banner-slide banner-slide-1 active">
+      <div class="banner-text">
+        <span class="banner-tag">🔥 Limitiertes Angebot</span>
+        <div class="banner-title">Bis zu 90 % Rabatt<br>auf Mode & mehr!</div>
+        <div class="banner-sub">Täglich neue Deals – nicht verpassen</div>
+        <button class="banner-cta">Jetzt shoppen →</button>
+      </div>
+      <div class="banner-img">👗</div>
+    </div>
+    <div class="banner-slide banner-slide-2">
+      <div class="banner-text">
+        <span class="banner-tag" style="background:rgba(255,255,255,.15);">⚡ Tech-Deals</span>
+        <div class="banner-title">Elektronik zum<br>Bestpreis</div>
+        <div class="banner-sub">Smartwatches, Kopfhörer, Zubehör</div>
+        <button class="banner-cta dark">Entdecken →</button>
+      </div>
+      <div class="banner-img">📱</div>
+    </div>
+    <div class="banner-slide banner-slide-3">
+      <div class="banner-text">
+        <span class="banner-tag" style="background:rgba(255,255,255,.2);">🌿 Garten & Haus</span>
+        <div class="banner-title">Frühling-Kollektion<br>jetzt verfügbar</div>
+        <div class="banner-sub">Für dein Zuhause und den Garten</div>
+        <button class="banner-cta green-btn">Mehr erfahren →</button>
+      </div>
+      <div class="banner-img">🌻</div>
+    </div>
+    <div class="banner-dots">
+      <div class="dot active" onclick="goSlide(0)"></div>
+      <div class="dot" onclick="goSlide(1)"></div>
+      <div class="dot" onclick="goSlide(2)"></div>
     </div>
   </div>
-  <div class="hero-image">🛍️</div>
+  <div class="banner-side">
+    <div class="side-banner side-banner-1">
+      <div class="side-text">
+        <h3>Für Senioren</h3>
+        <p>Komfort & Pflege ab 3 €</p>
+        <button class="side-btn">Entdecken</button>
+      </div>
+      <div class="side-icon">👴</div>
+    </div>
+    <div class="side-banner side-banner-2">
+      <div class="side-text">
+        <h3>Für Junge</h3>
+        <p>Trends & Style ab 2 €</p>
+        <button class="side-btn">Shoppen</button>
+      </div>
+      <div class="side-icon">🧑</div>
+    </div>
+  </div>
 </div>
 
-<!-- ═══════════════ FEATURED PRODUCT: WEISSE HOSE ═══════════════ -->
-<div class="section-title">
-  <h2>⭐ Empfohlen für dich</h2>
-  <a href="#">Alle anzeigen →</a>
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-banner">
+  <div class="trust-item"><span class="trust-icon">🛡️</span><span class="trust-label">Käuferschutz</span><span class="trust-sub">100% Geld-zurück-<br>Garantie</span></div>
+  <div class="trust-item"><span class="trust-icon">🏭</span><span class="trust-label">Direkt vom Hersteller</span><span class="trust-sub">Keine Zwischenhändler</span></div>
+  <div class="trust-item"><span class="trust-icon">💳</span><span class="trust-label">Sichere Zahlung</span><span class="trust-sub">PayPal · Klarna · Karte</span></div>
+  <div class="trust-item"><span class="trust-icon">⭐</span><span class="trust-label">Top Bewertungen</span><span class="trust-sub">Über 100 Mio. Rezensionen</span></div>
+  <div class="trust-item"><span class="trust-icon">🔔</span><span class="trust-label">Preisalarm</span><span class="trust-sub">Benachrichtigungen<br>bei Preissenkungen</span></div>
 </div>
 
-<div class="featured-card" onclick="addToCart('Weiße Hose mit Taschen')">
-  <div class="featured-inner">
-    <div class="featured-img">
-      <span class="featured-label">-43 % RABATT</span>
-      <!-- Weiße Hose SVG Illustration -->
-      <svg viewBox="0 0 110 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Bund -->
-        <rect x="18" y="8" width="74" height="16" rx="4" fill="#e0e0e0" stroke="#ccc" stroke-width="1.2"/>
+<!-- ══ FLASH SALE ══ -->
+<div class="flash-section">
+  <div class="section-head">
+    <div class="section-head-left">
+      <span style="font-size:22px;">⚡</span>
+      <span class="section-head-title">Flash Sale</span>
+      <div class="countdown">
+        <span class="countdown-label">Endet in</span>
+        <span class="time-block" id="hours">04</span>
+        <span class="time-sep">:</span>
+        <span class="time-block" id="mins">37</span>
+        <span class="time-sep">:</span>
+        <span class="time-block" id="secs">22</span>
+      </div>
+    </div>
+    <a class="see-all" href="#">Alle anzeigen ›</a>
+  </div>
+  <div class="scroll-row" id="flashRow">
+
+    <div class="pcard" onclick="addToCart('Weiße Hose mit Taschen',19.99)">
+      <div class="pcard-img">
+        <div class="pcard-emoji">
+          <svg viewBox="0 0 80 100" width="70" height="88" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="12" y="4" width="56" height="12" rx="3" fill="#e0e0e0" stroke="#ccc" stroke-width=".8"/>
+            <path d="M12 15 L12 88 Q12 96 24 96 L38 96 L40 15Z" fill="#f2f2f2" stroke="#ddd" stroke-width=".8"/>
+            <path d="M68 15 L68 88 Q68 96 56 96 L42 96 L40 15Z" fill="#f2f2f2" stroke="#ddd" stroke-width=".8"/>
+            <rect x="14" y="20" width="18" height="13" rx="2" fill="#e8e8e8" stroke="#ccc" stroke-width=".7"/>
+            <rect x="48" y="20" width="18" height="13" rx="2" fill="#e8e8e8" stroke="#ccc" stroke-width=".7"/>
+            <line x1="14" y1="27" x2="32" y2="27" stroke="#bbb" stroke-width=".6"/>
+            <line x1="48" y1="27" x2="66" y2="27" stroke="#bbb" stroke-width=".6"/>
+            <line x1="37" y1="15" x2="43" y2="15" stroke="#bbb" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="40" cy="12" r="2" fill="#bbb"/>
+          </svg>
+        </div>
+        <span class="pcard-discount">-43%</span>
+        <button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:82%"></div></div>82% verkauft</div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Weiße Damen-Hose mit Taschen – Stretch Slim Fit</div>
+        <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(1.247)</span></div>
+        <div class="pcard-prices"><span class="price-current">€19,99</span><span class="price-original">€34,99</span></div>
+        <div class="pcard-colors">
+          <div class="color-dot active" style="background:#f5f5f5;"></div>
+          <div class="color-dot" style="background:#1a1a1a;"></div>
+          <div class="color-dot" style="background:#3d5a80;"></div>
+          <div class="color-dot" style="background:#c97b6b;"></div>
+        </div>
+        <div class="pcard-ship">✅ Kostenloser Versand</div>
+        <button class="pcard-btn">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="pcard" onclick="addToCart('Sommer Bluse',5.99)">
+      <div class="pcard-img">
+        <div class="pcard-emoji">👚</div>
+        <span class="pcard-discount">-68%</span>
+        <button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:73%"></div></div>73% verkauft</div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Leichte Damen Sommer Bluse – Floral, V-Ausschnitt</div>
+        <div class="pcard-stars"><span class="stars-gold">★★★★½</span><span class="stars-count">(3.891)</span></div>
+        <div class="pcard-prices"><span class="price-current">€5,99</span><span class="price-original">€18,90</span></div>
+        <div class="pcard-ship">✅ Kostenloser Versand</div>
+        <button class="pcard-btn">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="pcard" onclick="addToCart('Sneaker Weiß',12.99)">
+      <div class="pcard-img">
+        <div class="pcard-emoji">👟</div>
+        <span class="pcard-discount">-55%</span>
+        <button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:90%"></div></div>90% verkauft</div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Unisex Sneaker weiß – Leicht & Bequem, Gr. 36–45</div>
+        <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(5.204)</span></div>
+        <div class="pcard-prices"><span class="price-current">€12,99</span><span class="price-original">€28,99</span></div>
+        <div class="pcard-ship">✅ Kostenloser Versand</div>
+        <button class="pcard-btn">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="pcard" onclick="addToCart('Bluetooth Kopfhörer',14.99)">
+      <div class="pcard-img">
+        <div class="pcard-emoji">🎧</div>
+        <span class="pcard-discount">-70%</span>
+        <button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:95%"></div></div>95% verkauft</div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Bluetooth Kopfhörer Over-Ear – ANC, 30h Akku</div>
+        <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(8.741)</span></div>
+        <div class="pcard-prices"><span class="price-current">€14,99</span><span class="price-original">€49,99</span></div>
+        <div class="pcard-ship">✅ Kostenloser Versand</div>
+        <button class="pcard-btn">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="pcard" onclick="addToCart('Smartwatch',9.99)">
+      <div class="pcard-img">
+        <div class="pcard-emoji">⌚</div>
+        <span class="pcard-discount">-72%</span>
+        <button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:88%"></div></div>88% verkauft</div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Smartwatch mit Herzfrequenz, IP68 wasserdicht</div>
+        <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(12.033)</span></div>
+        <div class="pcard-prices"><span class="price-current">€9,99</span><span class="price-original">€35,99</span></div>
+        <div class="pcard-ship">✅ Kostenloser Versand</div>
+        <button class="pcard-btn">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="pcard" onclick="addToCart('Sport Leggings',7.99)">
+      <div class="pcard-img">
+        <div class="pcard-emoji">🩱</div>
+        <span class="pcard-discount">-50%</span>
+        <button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">Sport Leggings High Waist Push-Up – 3 Farben</div>
+        <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(6.392)</span></div>
+        <div class="pcard-prices"><span class="price-current">€7,99</span><span class="price-original">€15,99</span></div>
+        <div class="pcard-ship">✅ Kostenloser Versand</div>
+        <button class="pcard-btn">In den Warenkorb</button>
+      </div>
+    </div>
+
+    <div class="pcard" onclick="addToCart('LED Lichterkette',3.99)">
+      <div class="pcard-img">
+        <div class="pcard-emoji">✨</div>
+        <span class="pcard-discount">-65%</span>
+        <button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">LED Lichterkette 10m – Warmweiß, innen & außen</div>
+        <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(4.110)</span></div>
+        <div class="pcard-prices"><span class="price-current">€3,99</span><span class="price-original">€11,99</span></div>
+        <div class="pcard-ship">✅ Kostenloser Versand</div>
+        <button class="pcard-btn">In den Warenkorb</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FEATURED: WEISSE HOSE ══ -->
+<div class="featured-wrap" style="margin-top:16px;">
+  <div class="section-head" style="margin-bottom:10px;">
+    <div class="section-head-left">
+      <span style="font-size:22px;">🌟</span>
+      <span class="section-head-title">Produkt des Tages</span>
+    </div>
+    <a class="see-all" href="#">Mehr sehen ›</a>
+  </div>
+  <div class="featured-product" onclick="addToCart('Weiße Hose mit Taschen',19.99)">
+    <div class="fp-image-section">
+      <span class="fp-badge">-43% RABATT</span>
+      <span class="fp-badge-new">NEU</span>
+      <svg class="pants-svg-big" viewBox="0 0 130 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Gürtelband -->
+        <rect x="15" y="6" width="100" height="18" rx="5" fill="#e0e0e0" stroke="#ccc" stroke-width="1.2"/>
         <!-- Gürtelschlaufen -->
-        <rect x="28" y="6" width="8" height="5" rx="2" fill="#ccc"/>
-        <rect x="50" y="5" width="10" height="6" rx="2" fill="#ccc"/>
-        <rect x="74" y="6" width="8" height="5" rx="2" fill="#ccc"/>
+        <rect x="26" y="4" width="10" height="7" rx="2.5" fill="#ccc" stroke="#bbb" stroke-width=".8"/>
+        <rect x="60" y="3" width="10" height="8" rx="2.5" fill="#ccc" stroke="#bbb" stroke-width=".8"/>
+        <rect x="94" y="4" width="10" height="7" rx="2.5" fill="#ccc" stroke="#bbb" stroke-width=".8"/>
         <!-- Linkes Bein -->
-        <path d="M18 22 L18 120 Q18 132 32 132 L50 132 L55 22 Z" fill="#f0f0f0" stroke="#ddd" stroke-width="1.2"/>
+        <path d="M15 22 C14 70 13 110 14 152 Q14 162 28 163 L60 163 L65 22 Z" fill="#f3f3f3" stroke="#ddd" stroke-width="1.2"/>
         <!-- Rechtes Bein -->
-        <path d="M92 22 L92 120 Q92 132 78 132 L60 132 L55 22 Z" fill="#f0f0f0" stroke="#ddd" stroke-width="1.2"/>
+        <path d="M115 22 C116 70 117 110 116 152 Q116 162 102 163 L70 163 L65 22 Z" fill="#f3f3f3" stroke="#ddd" stroke-width="1.2"/>
         <!-- Mittelnaht -->
-        <line x1="55" y1="22" x2="55" y2="60" stroke="#ccc" stroke-width="1" stroke-dasharray="3 2"/>
-        <!-- Linke Tasche -->
-        <rect x="22" y="28" width="22" height="18" rx="3" fill="#e8e8e8" stroke="#ccc" stroke-width="1"/>
-        <text x="27" y="40" font-size="8" fill="#aaa">🜁</text>
-        <!-- Rechte Tasche -->
-        <rect x="66" y="28" width="22" height="18" rx="3" fill="#e8e8e8" stroke="#ccc" stroke-width="1"/>
-        <!-- Taschendetail -->
-        <line x1="22" y1="36" x2="44" y2="36" stroke="#bbb" stroke-width=".8"/>
-        <line x1="66" y1="36" x2="88" y2="36" stroke="#bbb" stroke-width=".8"/>
+        <path d="M65 22 Q60 40 58 65" stroke="#ddd" stroke-width="1" stroke-dasharray="3 2.5"/>
+        <path d="M65 22 Q70 40 72 65" stroke="#ddd" stroke-width="1" stroke-dasharray="3 2.5"/>
+        <!-- Linke Seitentasche -->
+        <rect x="18" y="34" width="28" height="22" rx="4" fill="#ebebeb" stroke="#ccc" stroke-width="1"/>
+        <line x1="18" y1="45" x2="46" y2="45" stroke="#c8c8c8" stroke-width=".8"/>
+        <path d="M22 38 L42 38" stroke="#c0c0c0" stroke-width=".7" stroke-linecap="round"/>
+        <!-- Rechte Seitentasche -->
+        <rect x="84" y="34" width="28" height="22" rx="4" fill="#ebebeb" stroke="#ccc" stroke-width="1"/>
+        <line x1="84" y1="45" x2="112" y2="45" stroke="#c8c8c8" stroke-width=".8"/>
+        <path d="M88 38 L108 38" stroke="#c0c0c0" stroke-width=".7" stroke-linecap="round"/>
         <!-- Reißverschluss -->
-        <line x1="50" y1="10" x2="60" y2="10" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="55" cy="10" r="2" fill="#aaa"/>
+        <line x1="58" y1="9" x2="72" y2="9" stroke="#b8b8b8" stroke-width="1.8" stroke-linecap="round"/>
+        <rect x="62" y="7" width="6" height="5" rx="1" fill="#aaa"/>
         <!-- Knopf -->
-        <circle cx="55" cy="18" r="2.5" fill="#ccc" stroke="#bbb" stroke-width=".8"/>
-        <!-- Saum links -->
-        <line x1="20" y1="128" x2="48" y2="130" stroke="#ccc" stroke-width="1"/>
-        <!-- Saum rechts -->
-        <line x1="62" y1="130" x2="90" y2="128" stroke="#ccc" stroke-width="1"/>
+        <circle cx="65" cy="19" r="3.5" fill="#ddd" stroke="#bbb" stroke-width="1"/>
+        <circle cx="65" cy="19" r="1.2" fill="#bbb"/>
+        <!-- Linker Saum -->
+        <path d="M16 157 Q30 161 58 161" stroke="#ccc" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- Rechter Saum -->
+        <path d="M72 161 Q100 161 114 157" stroke="#ccc" stroke-width="1.2" stroke-linecap="round"/>
         <!-- Schatten -->
-        <ellipse cx="55" cy="134" rx="30" ry="4" fill="rgba(0,0,0,0.06)"/>
+        <ellipse cx="65" cy="167" rx="40" ry="5" fill="rgba(0,0,0,0.07)"/>
+        <!-- Aufhänger-Etikett -->
+        <rect x="61" y="25" width="8" height="12" rx="1.5" fill="#fff" stroke="#eee" stroke-width=".8"/>
+        <line x1="65" y1="24" x2="65" y2="25" stroke="#ddd" stroke-width="1"/>
+        <line x1="63" y1="29" x2="67" y2="29" stroke="#fa5300" stroke-width=".7"/>
+        <line x1="63" y1="31" x2="67" y2="31" stroke="#fa5300" stroke-width=".5"/>
       </svg>
     </div>
-    <div class="featured-details">
-      <h3>Damen Hose Weiß mit Taschen – Slim Fit, Stretch</h3>
-      <div class="desc">
-        ✅ Weiß &nbsp;|&nbsp; 🪡 Hochwertiges Stretch-Material<br>
-        👜 2 Seitentaschen + 1 Gesäßtasche<br>
-        📏 Verfügbar in S, M, L, XL, XXL<br>
-        🌸 Perfekt für Alltag & Freizeit
+    <div class="fp-details">
+      <div class="fp-category">Damenmode · Hosen</div>
+      <div class="fp-title">Weiße Damen-Hose mit Taschen</div>
+      <div class="fp-subtitle">Slim Fit · Stretch-Material · 3 Taschen · S bis XXL</div>
+      <div class="fp-rating">
+        <span class="fp-stars">★★★★★</span>
+        <span class="fp-rating-num">4,8</span>
+        <span class="fp-rating-count">1.247 Bewertungen</span>
+        <span class="fp-verified">✔ Verifiziert</span>
       </div>
-      <div>
-        <span class="featured-price-big">€19,99</span>
-        <span class="featured-price-old">€34,99</span>
+      <div class="fp-price-row">
+        <span class="fp-price">€19,99</span>
+        <span class="fp-price-old">€34,99</span>
+        <span class="fp-save">Du sparst €15,00</span>
       </div>
-      <div class="feature-tags">
-        <span class="feature-tag">🚚 Gratis Versand</span>
-        <span class="feature-tag">↩️ 30 Tage Rückgabe</span>
-        <span class="feature-tag">⭐ 4,8 / 5</span>
-        <span class="feature-tag">🔥 1.247 verkauft</span>
+      <div class="fp-features">
+        <span class="fp-feat">🪡 Stretch-Stoff</span>
+        <span class="fp-feat">🤍 Farbe Weiß</span>
+        <span class="fp-feat">👜 3 Taschen</span>
+        <span class="fp-feat">🌸 Slim Fit</span>
+        <span class="fp-feat">🚿 Maschinenwaschbar</span>
+        <span class="fp-feat">☀️ Sommer & Alltag</span>
       </div>
-      <button class="featured-add-btn">🛒 In den Warenkorb</button>
+      <div class="fp-sizes">
+        <span>Größe:</span>
+        <button class="size-btn">XS</button>
+        <button class="size-btn active">S</button>
+        <button class="size-btn">M</button>
+        <button class="size-btn">L</button>
+        <button class="size-btn">XL</button>
+        <button class="size-btn">XXL</button>
+      </div>
+      <div class="fp-actions">
+        <button class="fp-add-btn">🛒 In den Warenkorb</button>
+        <button class="fp-wish-btn" onclick="wishToggle(this,event)">🤍</button>
+      </div>
+      <div class="fp-delivery">🚚 Kostenloser Versand · Lieferung: 12.–18. Mai 2026</div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ PRODUCT GRID ═══════════════ -->
-<div class="section-title">
-  <h2>🔥 Flash Sale – Nur heute!</h2>
-  <a href="#">Alle ansehen →</a>
+<!-- ══ TABS ══ -->
+<div class="tabs-wrap" style="margin-top:18px;">
+  <div class="section-head" style="margin-bottom:10px;">
+    <div class="section-head-left">
+      <span style="font-size:22px;">🛍️</span>
+      <span class="section-head-title">Entdecke mehr</span>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'all')">Alle Angebote</button>
+    <button class="tab" onclick="switchTab(this,'senior')">👴 Für Senioren</button>
+    <button class="tab" onclick="switchTab(this,'young')">🧑 Für Junge</button>
+    <button class="tab" onclick="switchTab(this,'new')">🆕 Neu eingetroffen</button>
+  </div>
 </div>
 
-<div class="product-grid">
-
-  <!-- 1 -->
-  <div class="product-card" onclick="addToCart('Sommertop')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">👚</div>
-      <span class="discount-badge">-60%</span>
-      <button class="wishlist-btn">🤍</button>
+<!-- ══ SENIOREN SEKTION ══ -->
+<div class="audience-section" id="sec-senior">
+  <div class="audience-header senior">
+    <span class="aud-icon">👴</span>
+    <div>
+      <h2>Für Senioren – Komfort & Wohlbefinden</h2>
+      <p>Praktische Produkte für mehr Lebensqualität – einfach, bequem, günstig</p>
     </div>
-    <div class="product-info">
-      <div class="product-name">Damen Sommer Top Blumenmuster</div>
-      <div class="price-row">
-        <span class="price-now">€4,99</span>
-        <span class="price-old">€12,99</span>
+  </div>
+  <div class="aud-body">
+    <div class="scroll-row">
+
+      <div class="pcard" onclick="addToCart('Komfort-Hausschuhe',8.99)">
+        <div class="pcard-img"><div class="pcard-emoji">🥿</div>
+          <span class="pcard-discount">-48%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+          <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:71%"></div></div>71% verkauft</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Memory Foam Hausschuhe – Rutschfest, Weite Passform</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(4.220)</span></div>
+          <div class="pcard-prices"><span class="price-current">€8,99</span><span class="price-original">€17,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
       </div>
-      <div class="stars">★★★★★ (823)</div>
-      <div class="free-ship">✅ Gratis Versand</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
+
+      <div class="pcard" onclick="addToCart('Große-Tasten Telefon',24.99)">
+        <div class="pcard-img"><div class="pcard-emoji">📞</div>
+          <span class="pcard-discount">-40%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Seniorentelefon – Große Tasten, Lauter Klingelton</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(1.833)</span></div>
+          <div class="pcard-prices"><span class="price-current">€24,99</span><span class="price-original">€41,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Lesebrille 3er Set',5.99)">
+        <div class="pcard-img"><div class="pcard-emoji">👓</div>
+          <span class="pcard-discount">-60%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+          <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:84%"></div></div>84% verkauft</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Lesebrillen 3er Set – Stärke +1,0 bis +3,5 wählbar</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(6.077)</span></div>
+          <div class="pcard-prices"><span class="price-current">€5,99</span><span class="price-original">€14,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Massagegerät',16.99)">
+        <div class="pcard-img"><div class="pcard-emoji">💆</div>
+          <span class="pcard-discount">-55%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Schulter & Nacken Massagegerät – Wärme & Vibration</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(3.559)</span></div>
+          <div class="pcard-prices"><span class="price-current">€16,99</span><span class="price-original">€37,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Blutdruckmessgerät',18.99)">
+        <div class="pcard-img"><div class="pcard-emoji">🩺</div>
+          <span class="pcard-discount">-38%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Blutdruckmessgerät Oberarm – Digital, Große Anzeige</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(2.211)</span></div>
+          <div class="pcard-prices"><span class="price-current">€18,99</span><span class="price-original">€30,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Gehstock',12.49)">
+        <div class="pcard-img"><div class="pcard-emoji">🦯</div>
+          <span class="pcard-discount">-44%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Faltbarer Gehstock mit LED-Licht – Höhenverstellbar</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(987)</span></div>
+          <div class="pcard-prices"><span class="price-current">€12,49</span><span class="price-original">€22,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Wärmekissen',14.99)">
+        <div class="pcard-img"><div class="pcard-emoji">🔥</div>
+          <span class="pcard-discount">-50%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+          <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:67%"></div></div>67% verkauft</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Elektrisches Wärmekissen – Rücken & Bauch, 3 Stufen</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(2.891)</span></div>
+          <div class="pcard-prices"><span class="price-current">€14,99</span><span class="price-original">€29,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ JUNGE SEKTION ══ -->
+<div class="audience-section" id="sec-young">
+  <div class="audience-header young">
+    <span class="aud-icon">🧑</span>
+    <div>
+      <h2>Für Junge – Trends, Style & Tech</h2>
+      <p>Die neusten Trends, günstig wie nie – von Fashion bis Gaming</p>
+    </div>
+  </div>
+  <div class="aud-body">
+    <div class="scroll-row">
+
+      <div class="pcard" onclick="addToCart('Wireless Earbuds',11.99)">
+        <div class="pcard-img"><div class="pcard-emoji">🎵</div>
+          <span class="pcard-discount">-72%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+          <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:96%"></div></div>96% verkauft</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">True Wireless Earbuds – ANC, 30h, Bluetooth 5.3</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(15.402)</span></div>
+          <div class="pcard-prices"><span class="price-current">€11,99</span><span class="price-original">€42,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Oversized Hoodie',13.99)">
+        <div class="pcard-img"><div class="pcard-emoji">🧥</div>
+          <span class="pcard-new">NEU</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Oversized Hoodie Unisex – Y2K Style, 12 Farben</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(9.211)</span></div>
+          <div class="pcard-prices"><span class="price-current">€13,99</span><span class="price-original">€29,99</span></div>
+          <div class="pcard-colors">
+            <div class="color-dot active" style="background:#1a1a1a;"></div>
+            <div class="color-dot" style="background:#fa5300;"></div>
+            <div class="color-dot" style="background:#3d5a80;"></div>
+            <div class="color-dot" style="background:#e8e8e8;"></div>
+          </div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Gaming Maus',8.49)">
+        <div class="pcard-img"><div class="pcard-emoji">🖱️</div>
+          <span class="pcard-discount">-63%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Gaming Maus RGB – 7200 DPI, 6 Tasten programmierbar</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(7.831)</span></div>
+          <div class="pcard-prices"><span class="price-current">€8,49</span><span class="price-original">€22,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Handyhülle mit MagSafe',4.99)">
+        <div class="pcard-img"><div class="pcard-emoji">📱</div>
+          <span class="pcard-discount">-55%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Handyhülle iPhone 15 / Samsung MagSafe kompatibel</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(22.031)</span></div>
+          <div class="pcard-prices"><span class="price-current">€4,99</span><span class="price-original">€10,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Mini Crossbody Bag',9.99)">
+        <div class="pcard-img"><div class="pcard-emoji">👜</div>
+          <span class="pcard-new">TREND</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+          <div class="pcard-sold"><div class="sold-bar-mini"><div class="sold-fill-mini" style="width:78%"></div></div>78% verkauft</div>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Y2K Mini Crossbody Bag – Vintage, 8 Farben</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(5.622)</span></div>
+          <div class="pcard-prices"><span class="price-current">€9,99</span><span class="price-original">€19,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Ring Light',7.99)">
+        <div class="pcard-img"><div class="pcard-emoji">💡</div>
+          <span class="pcard-discount">-58%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Ring Light 26cm – Für TikTok, YouTube, Selfie & Streams</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(11.203)</span></div>
+          <div class="pcard-prices"><span class="price-current">€7,99</span><span class="price-original">€18,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+      <div class="pcard" onclick="addToCart('Sneaker Chunky',16.99)">
+        <div class="pcard-img"><div class="pcard-emoji">👠</div>
+          <span class="pcard-new">NEU</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+        </div>
+        <div class="pcard-body">
+          <div class="pcard-name">Chunky Platform Sneaker – Trendy, Gr. 35–42</div>
+          <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(3.887)</span></div>
+          <div class="pcard-prices"><span class="price-current">€16,99</span><span class="price-original">€34,99</span></div>
+          <div class="pcard-ship">✅ Gratis Versand</div>
+          <button class="pcard-btn">In den Warenkorb</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ WEITERE PRODUKTE GRID ══ -->
+<div style="max-width:1400px;margin:0 auto;">
+  <div class="section-head" style="padding:0 12px;margin-bottom:10px;margin-top:16px;">
+    <div class="section-head-left">
+      <span style="font-size:22px;">🆕</span>
+      <span class="section-head-title">Neu eingetroffen</span>
+    </div>
+    <a class="see-all" href="#">Alle anzeigen ›</a>
+  </div>
+</div>
+<div class="grid-products">
+
+  <div class="pcard pcard-grid" onclick="addToCart('Küchenmesser Set',13.99)">
+    <div class="pcard-img"><div class="pcard-emoji">🔪</div>
+      <span class="pcard-discount">-54%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
+    </div>
+    <div class="pcard-body">
+      <div class="pcard-name">Profi Küchenmesser 5-tlg. – Edelstahl, Ergonomisch</div>
+      <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(8.033)</span></div>
+      <div class="pcard-prices"><span class="price-current">€13,99</span><span class="price-original">€29,99</span></div>
+      <div class="pcard-ship">✅ Gratis Versand</div>
+      <button class="pcard-btn">In den Warenkorb</button>
     </div>
   </div>
 
-  <!-- 2 -->
-  <div class="product-card" onclick="addToCart('Sneaker')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">👟</div>
-      <span class="discount-badge">-55%</span>
-      <button class="wishlist-btn">🤍</button>
+  <div class="pcard pcard-grid" onclick="addToCart('Yogamatte',8.99)">
+    <div class="pcard-img"><div class="pcard-emoji">🧘</div>
+      <span class="pcard-discount">-47%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
     </div>
-    <div class="product-info">
-      <div class="product-name">Sneaker Herren Leicht Sportschuh</div>
-      <div class="price-row">
-        <span class="price-now">€11,99</span>
-        <span class="price-old">€26,99</span>
-      </div>
-      <div class="sold-bar-wrap">
-        <div class="sold-label">78 % verkauft</div>
-        <div class="sold-bar"><div class="sold-fill" style="width:78%"></div></div>
-      </div>
-      <div class="stars">★★★★☆ (2.104)</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
+    <div class="pcard-body">
+      <div class="pcard-name">Yogamatte rutschfest 6mm – Für Anfänger & Profis</div>
+      <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(4.129)</span></div>
+      <div class="pcard-prices"><span class="price-current">€8,99</span><span class="price-original">€16,99</span></div>
+      <div class="pcard-ship">✅ Gratis Versand</div>
+      <button class="pcard-btn">In den Warenkorb</button>
     </div>
   </div>
 
-  <!-- 3 -->
-  <div class="product-card" onclick="addToCart('Smartwatch')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">⌚</div>
-      <span class="discount-badge">-70%</span>
-      <button class="wishlist-btn">🤍</button>
+  <div class="pcard pcard-grid" onclick="addToCart('Haartrockner',7.49)">
+    <div class="pcard-img"><div class="pcard-emoji">💨</div>
+      <span class="pcard-discount">-44%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
     </div>
-    <div class="product-info">
-      <div class="product-name">Smartwatch mit Herzfrequenz & Schrittzähler</div>
-      <div class="price-row">
-        <span class="price-now">€8,99</span>
-        <span class="price-old">€29,99</span>
-      </div>
-      <div class="sold-bar-wrap">
-        <div class="sold-label">91 % verkauft</div>
-        <div class="sold-bar"><div class="sold-fill" style="width:91%"></div></div>
-      </div>
-      <div class="stars">★★★★★ (5.672)</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
+    <div class="pcard-body">
+      <div class="pcard-name">Ionic Haartrockner 2200W – Schnelltrocknung, Leise</div>
+      <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(6.722)</span></div>
+      <div class="pcard-prices"><span class="price-current">€7,49</span><span class="price-original">€13,49</span></div>
+      <div class="pcard-ship">✅ Gratis Versand</div>
+      <button class="pcard-btn">In den Warenkorb</button>
     </div>
   </div>
 
-  <!-- 4 -->
-  <div class="product-card" onclick="addToCart('Haartrockner')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">💨</div>
-      <span class="discount-badge">-45%</span>
-      <button class="wishlist-btn">🤍</button>
+  <div class="pcard pcard-grid" onclick="addToCart('Pflanzentopf Set',11.99)">
+    <div class="pcard-img"><div class="pcard-emoji">🪴</div>
+      <span class="pcard-new">NEU</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
     </div>
-    <div class="product-info">
-      <div class="product-name">Mini Haartrockner Reisegröße 1200W</div>
-      <div class="price-row">
-        <span class="price-now">€6,49</span>
-        <span class="price-old">€11,99</span>
-      </div>
-      <div class="stars">★★★★☆ (411)</div>
-      <div class="free-ship">✅ Gratis Versand</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
+    <div class="pcard-body">
+      <div class="pcard-name">Keramik Pflanzentöpfe 3er Set – Boho Design, 3 Farben</div>
+      <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(1.882)</span></div>
+      <div class="pcard-prices"><span class="price-current">€11,99</span><span class="price-original">€21,99</span></div>
+      <div class="pcard-ship">✅ Gratis Versand</div>
+      <button class="pcard-btn">In den Warenkorb</button>
     </div>
   </div>
 
-  <!-- 5 -->
-  <div class="product-card" onclick="addToCart('Leggings')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">🩱</div>
-      <span class="discount-badge">-50%</span>
-      <button class="wishlist-btn">🤍</button>
+  <div class="pcard pcard-grid" onclick="addToCart('Sonnencreme SPF 50',3.99)">
+    <div class="pcard-img"><div class="pcard-emoji">🧴</div>
+      <span class="pcard-discount">-37%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
     </div>
-    <div class="product-info">
-      <div class="product-name">Sport Leggings High Waist Push-Up</div>
-      <div class="price-row">
-        <span class="price-now">€7,99</span>
-        <span class="price-old">€15,99</span>
-      </div>
-      <div class="sold-bar-wrap">
-        <div class="sold-label">64 % verkauft</div>
-        <div class="sold-bar"><div class="sold-fill" style="width:64%"></div></div>
-      </div>
-      <div class="stars">★★★★★ (3.291)</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
+    <div class="pcard-body">
+      <div class="pcard-name">Sonnencreme SPF 50+ – Wasserfest, Gesicht & Körper</div>
+      <div class="pcard-stars"><span class="stars-gold">★★★★☆</span><span class="stars-count">(3.401)</span></div>
+      <div class="pcard-prices"><span class="price-current">€3,99</span><span class="price-original">€6,49</span></div>
+      <div class="pcard-ship">✅ Gratis Versand</div>
+      <button class="pcard-btn">In den Warenkorb</button>
     </div>
   </div>
 
-  <!-- 6 -->
-  <div class="product-card" onclick="addToCart('Bluetooth Kopfhörer')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">🎧</div>
-      <span class="discount-badge">-65%</span>
-      <button class="wishlist-btn">🤍</button>
+  <div class="pcard pcard-grid" onclick="addToCart('Kissen Set',15.99)">
+    <div class="pcard-img"><div class="pcard-emoji">🛋️</div>
+      <span class="pcard-discount">-45%</span><button class="pcard-wish" onclick="wishToggle(this,event)">🤍</button>
     </div>
-    <div class="product-info">
-      <div class="product-name">Bluetooth Kopfhörer Over-Ear Noise Cancel</div>
-      <div class="price-row">
-        <span class="price-now">€13,99</span>
-        <span class="price-old">€39,99</span>
-      </div>
-      <div class="stars">★★★★☆ (1.882)</div>
-      <div class="free-ship">✅ Gratis Versand</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
-    </div>
-  </div>
-
-  <!-- 7 -->
-  <div class="product-card" onclick="addToCart('Handtasche')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">👜</div>
-      <span class="discount-badge">-40%</span>
-      <button class="wishlist-btn">🤍</button>
-    </div>
-    <div class="product-info">
-      <div class="product-name">Damen Handtasche Schultertasche PU-Leder</div>
-      <div class="price-row">
-        <span class="price-now">€9,99</span>
-        <span class="price-old">€16,99</span>
-      </div>
-      <div class="stars">★★★★★ (742)</div>
-      <div class="free-ship">✅ Gratis Versand</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
-    </div>
-  </div>
-
-  <!-- 8 -->
-  <div class="product-card" onclick="addToCart('Sonnencreme')">
-    <div class="product-img-wrap">
-      <div class="product-emoji">🧴</div>
-      <span class="discount-badge">-35%</span>
-      <button class="wishlist-btn">🤍</button>
-    </div>
-    <div class="product-info">
-      <div class="product-name">Sonnencreme SPF 50+ Gesicht & Körper</div>
-      <div class="price-row">
-        <span class="price-now">€3,99</span>
-        <span class="price-old">€6,49</span>
-      </div>
-      <div class="sold-bar-wrap">
-        <div class="sold-label">55 % verkauft</div>
-        <div class="sold-bar"><div class="sold-fill" style="width:55%"></div></div>
-      </div>
-      <div class="stars">★★★★☆ (598)</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
+    <div class="pcard-body">
+      <div class="pcard-name">Deko-Kissenbezüge 4er Set – 45×45cm, Baumwolle</div>
+      <div class="pcard-stars"><span class="stars-gold">★★★★★</span><span class="stars-count">(2.271)</span></div>
+      <div class="pcard-prices"><span class="price-current">€15,99</span><span class="price-original">€28,99</span></div>
+      <div class="pcard-ship">✅ Gratis Versand</div>
+      <button class="pcard-btn">In den Warenkorb</button>
     </div>
   </div>
 
 </div>
 
-<!-- ═══════════════ MEHR PRODUKTE ═══════════════ -->
-<div class="section-title">
-  <h2>🛍️ Mehr für dich entdecken</h2>
-  <a href="#">Alle ansehen →</a>
+<!-- ══ NEWSLETTER ══ -->
+<div class="newsletter">
+  <h2>🎁 Exklusive Angebote per E-Mail</h2>
+  <p>Jetzt anmelden und 15 % Rabatt auf deine nächste Bestellung erhalten</p>
+  <div class="nl-form">
+    <input type="email" placeholder="Deine E-Mail-Adresse …"/>
+    <button class="nl-btn" onclick="subscribeNewsletter()">Anmelden</button>
+  </div>
+  <p class="nl-note">Kein Spam. Jederzeit abmeldbar. Datenschutz gemäß DSGVO.</p>
 </div>
 
-<div class="product-grid">
-
-  <div class="product-card" onclick="addToCart('Küchenmesser Set')">
-    <div class="product-img-wrap"><div class="product-emoji">🔪</div>
-    <span class="discount-badge">-52%</span><button class="wishlist-btn">🤍</button></div>
-    <div class="product-info">
-      <div class="product-name">Profi Küchenmesser 5er Set Edelstahl</div>
-      <div class="price-row"><span class="price-now">€12,99</span><span class="price-old">€27,00</span></div>
-      <div class="stars">★★★★★ (2.031)</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
-    </div>
-  </div>
-
-  <div class="product-card" onclick="addToCart('Yogamatte')">
-    <div class="product-img-wrap"><div class="product-emoji">🧘</div>
-    <span class="discount-badge">-48%</span><button class="wishlist-btn">🤍</button></div>
-    <div class="product-info">
-      <div class="product-name">Yogamatte rutschfest 6mm dick Pink</div>
-      <div class="price-row"><span class="price-now">€8,49</span><span class="price-old">€16,99</span></div>
-      <div class="stars">★★★★☆ (989)</div>
-      <div class="free-ship">✅ Gratis Versand</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
-    </div>
-  </div>
-
-  <div class="product-card" onclick="addToCart('Lichterkette')">
-    <div class="product-img-wrap"><div class="product-emoji">✨</div>
-    <span class="discount-badge">-62%</span><button class="wishlist-btn">🤍</button></div>
-    <div class="product-info">
-      <div class="product-name">LED Lichterkette 10m warmweiß innen & außen</div>
-      <div class="price-row"><span class="price-now">€4,49</span><span class="price-old">€11,99</span></div>
-      <div class="stars">★★★★★ (4.411)</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
-    </div>
-  </div>
-
-  <div class="product-card" onclick="addToCart('Pflanzentopf Set')">
-    <div class="product-img-wrap"><div class="product-emoji">🪴</div>
-    <span class="discount-badge">-30%</span><button class="wishlist-btn">🤍</button></div>
-    <div class="product-info">
-      <div class="product-name">Keramik Pflanzentöpfe 3er Set Modern</div>
-      <div class="price-row"><span class="price-now">€10,99</span><span class="price-old">€15,99</span></div>
-      <div class="stars">★★★★☆ (321)</div>
-      <button class="add-cart-btn">+ Warenkorb</button>
-    </div>
-  </div>
-
-</div>
-
-<!-- ═══════════════ FOOTER ═══════════════ -->
+<!-- ══ FOOTER ══ -->
 <footer>
-  <div class="footer-links">
-    <a href="#">Über uns</a>
-    <a href="#">Datenschutz</a>
-    <a href="#">AGB</a>
-    <a href="#">Impressum</a>
-    <a href="#">Hilfe & FAQ</a>
-    <a href="#">Versandinformationen</a>
-    <a href="#">Rückgabe & Erstattung</a>
-    <a href="#">Affiliate Programm</a>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo-f">temu</div>
+      <p>Millionen Produkte direkt vom Hersteller. Günstig einkaufen ohne Kompromisse beim Qualitätsanspruch.</p>
+      <div class="footer-payments">
+        <span class="pay-badge">💳 Visa</span>
+        <span class="pay-badge">💳 Mastercard</span>
+        <span class="pay-badge">🅿️ PayPal</span>
+        <span class="pay-badge">🍎 Apple Pay</span>
+        <span class="pay-badge">G Pay</span>
+        <span class="pay-badge">Klarna</span>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Kundenservice</h4>
+      <a href="#">Hilfe-Center</a>
+      <a href="#">Meine Bestellungen</a>
+      <a href="#">Versandinfo</a>
+      <a href="#">Rückgabe & Erstattung</a>
+      <a href="#">Zahlung</a>
+      <a href="#">Kontakt</a>
+    </div>
+    <div class="footer-col">
+      <h4>Über Temu</h4>
+      <a href="#">Über uns</a>
+      <a href="#">Karriere</a>
+      <a href="#">Presse</a>
+      <a href="#">Affiliate Programm</a>
+      <a href="#">Verkäufer werden</a>
+    </div>
+    <div class="footer-col">
+      <h4>Rechtliches</h4>
+      <a href="#">Datenschutz</a>
+      <a href="#">AGB</a>
+      <a href="#">Impressum</a>
+      <a href="#">Cookie-Einstellungen</a>
+      <a href="#">Barrierefreiheit</a>
+    </div>
   </div>
-  <p>© 2024 Temu-Klon Demo. Alle Rechte vorbehalten. | Preise inkl. MwSt.</p>
-  <p style="margin-top:6px;">💳 PayPal &nbsp;|&nbsp; Kreditkarte &nbsp;|&nbsp; Klarna &nbsp;|&nbsp; Sofort &nbsp;|&nbsp; Apple Pay &nbsp;|&nbsp; Google Pay</p>
+  <div class="footer-bottom">
+    <p>© 2024 Temu-Demo. Alle Rechte vorbehalten. Preise inkl. MwSt. | Demo-Seite – kein echtes Geschäft</p>
+    <div class="footer-flags" title="Internationale Shops">🇩🇪 🇦🇹 🇨🇭 🇫🇷 🇬🇧 🇺🇸</div>
+  </div>
 </footer>
 
-<!-- ═══════════════ CART BUBBLE ═══════════════ -->
-<div id="cart-bubble" onclick="openCart()">
-  🛒
-  <div id="cart-count">0</div>
+<!-- ══ FLOATING CART ══ -->
+<div id="float-cart" onclick="openCart()">
+  🛒<div id="float-count">0</div>
 </div>
 
-<!-- ═══════════════ TOAST ═══════════════ -->
-<div id="toast">✅ Zum Warenkorb hinzugefügt</div>
+<!-- ══ BACK TO TOP ══ -->
+<div id="backtop" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</div>
 
-<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<!-- ══ TOAST ══ -->
+<div id="toast"></div>
+
+<!-- ══ SCRIPTS ══ -->
 <script>
-  let cartCount = 0;
+/* ── Cart ── */
+let cartCount=0, cartTotal=0;
+function addToCart(name, price){
+  cartCount++;
+  cartTotal+=price||0;
+  document.getElementById('cart-count').textContent=cartCount;
+  document.getElementById('float-count').textContent=cartCount;
+  showToast('<span class="t-green">✔</span> "'+name+'" zum Warenkorb hinzugefügt');
+}
+function openCart(){
+  if(cartCount===0){alert('Dein Warenkorb ist noch leer.\n\nFüge Produkte hinzu und komm zurück!');}
+  else{alert('🛒 Warenkorb\n\n'+cartCount+' Artikel\nGesamtsumme: €'+cartTotal.toFixed(2)+'\n\nZur Kasse →');}
+}
 
-  function addToCart(name) {
-    cartCount++;
-    document.getElementById('cart-count').textContent = cartCount;
-    const toast = document.getElementById('toast');
-    toast.textContent = '✅ "' + name + '" zum Warenkorb hinzugefügt';
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2200);
-  }
+/* ── Wishlist ── */
+function wishToggle(btn,e){
+  e.stopPropagation();
+  if(btn.textContent==='🤍'){btn.textContent='❤️';showToast('❤️ Zur Wunschliste hinzugefügt');}
+  else{btn.textContent='🤍';showToast('Aus Wunschliste entfernt');}
+}
 
-  function openCart() {
-    if (cartCount === 0) {
-      alert('Dein Warenkorb ist leer.\nFüge Produkte hinzu um fortzufahren!');
-    } else {
-      alert('🛒 Du hast ' + cartCount + ' Artikel im Warenkorb.\n\nGesamtsumme: Bitte zur Kasse gehen.');
-    }
-  }
+/* ── Toast ── */
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.innerHTML=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2500);
+}
 
-  // Category bar active state
-  document.querySelectorAll('.cat-item').forEach(el => {
-    el.addEventListener('click', () => {
-      document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
-      el.classList.add('active');
-    });
+/* ── Countdown ── */
+let totalSecs=4*3600+37*60+22;
+setInterval(()=>{
+  if(totalSecs<=0)return;
+  totalSecs--;
+  const h=String(Math.floor(totalSecs/3600)).padStart(2,'0');
+  const m=String(Math.floor((totalSecs%3600)/60)).padStart(2,'0');
+  const s=String(totalSecs%60).padStart(2,'0');
+  document.getElementById('hours').textContent=h;
+  document.getElementById('mins').textContent=m;
+  document.getElementById('secs').textContent=s;
+},1000);
+
+/* ── Banner Slider ── */
+let slideIdx=0;
+const slides=document.querySelectorAll('.banner-slide');
+const dots=document.querySelectorAll('.dot');
+function goSlide(i){
+  slides[slideIdx].classList.remove('active');
+  dots[slideIdx].classList.remove('active');
+  slideIdx=i;
+  slides[slideIdx].classList.add('active');
+  dots[slideIdx].classList.add('active');
+}
+setInterval(()=>goSlide((slideIdx+1)%slides.length),4500);
+
+/* ── Category bar ── */
+document.querySelectorAll('.nav-item').forEach(el=>{
+  el.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-item').forEach(c=>c.classList.remove('active'));
+    el.classList.add('active');
   });
+});
 
-  // Wishlist toggle
-  document.querySelectorAll('.wishlist-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
+/* ── Tabs ── */
+function switchTab(btn,tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* ── Size buttons ── */
+document.querySelectorAll('.size-btn').forEach(btn=>{
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    btn.closest('.fp-sizes').querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+/* ── Back to top ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('backtop').classList.toggle('show',window.scrollY>400);
+});
+
+/* ── Color dots ── */
+document.querySelectorAll('.pcard-colors').forEach(wrap=>{
+  wrap.querySelectorAll('.color-dot').forEach(dot=>{
+    dot.addEventListener('click',e=>{
       e.stopPropagation();
-      btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+      wrap.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));
+      dot.classList.add('active');
     });
   });
-</script>
+});
 
+/* ── Newsletter ── */
+function subscribeNewsletter(){
+  const inp=document.querySelector('.nl-form input');
+  if(!inp.value||!inp.value.includes('@')){showToast('⚠️ Bitte gib eine gültige E-Mail ein.');return;}
+  showToast('🎁 Danke! Dein 15 %-Gutschein wurde per E-Mail gesendet.');
+  inp.value='';
+}
+</script>
 </body>
 </html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temu – Günstig shoppen</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
+
+    /* ─── HEADER ─── */
+    header {
+      background: #fa5300;
+      padding: 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0,0,0,.25);
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 56px;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .search-bar {
+      flex: 1;
+      display: flex;
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      height: 38px;
+    }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 0 14px;
+      font-size: 14px;
+    }
+    .search-bar button {
+      background: #fa5300;
+      border: none;
+      padding: 0 16px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #fff;
+    }
+    .header-icons {
+      display: flex;
+      gap: 18px;
+      color: #fff;
+    }
+    .header-icons span {
+      font-size: 22px;
+      cursor: pointer;
+    }
+    .header-nav {
+      display: flex;
+      gap: 24px;
+      height: 36px;
+      align-items: center;
+    }
+    .header-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      opacity: .9;
+      white-space: nowrap;
+    }
+    .header-nav a:hover { opacity: 1; text-decoration: underline; }
+
+    /* ─── BANNER ─── */
+    .banner {
+      background: linear-gradient(135deg, #ff6a00 0%, #fa5300 40%, #c93500 100%);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .4px;
+    }
+    .banner span { background: #fff; color: #fa5300; padding: 2px 8px; border-radius: 4px; margin-left: 6px; font-weight: 900; }
+
+    /* ─── PROMO STRIP ─── */
+    .promo-strip {
+      background: #fff9f5;
+      border-bottom: 1px solid #ffe0cc;
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 8px 16px;
+      flex-wrap: wrap;
+    }
+    .promo-strip div {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #555;
+    }
+    .promo-strip div span.icon { font-size: 18px; }
+
+    /* ─── CATEGORY BAR ─── */
+    .category-bar {
+      background: #fff;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      border-bottom: 2px solid #f0f0f0;
+      padding: 0 8px;
+    }
+    .category-bar::-webkit-scrollbar { height: 0; }
+    .cat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-size: 12px;
+      color: #555;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      flex-shrink: 0;
+    }
+    .cat-item:hover, .cat-item.active { color: #fa5300; border-bottom-color: #fa5300; }
+    .cat-item .cat-icon { font-size: 22px; margin-bottom: 2px; }
+
+    /* ─── HERO SECTION ─── */
+    .hero {
+      background: linear-gradient(to right, #fff5f0, #ffe8db);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 40px;
+      margin: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .hero-text h1 { font-size: 28px; color: #c93500; font-weight: 900; }
+    .hero-text p { font-size: 15px; color: #666; margin: 6px 0 16px; }
+    .btn-orange {
+      background: #fa5300;
+      color: #fff;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-orange:hover { background: #e04a00; }
+    .hero-badges { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+    .badge {
+      background: #fa5300;
+      color: #fff;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .badge.yellow { background: #f5a623; }
+    .badge.green  { background: #27ae60; }
+    .hero-image { font-size: 90px; filter: drop-shadow(2px 4px 8px rgba(0,0,0,.15)); }
+
+    /* ─── SECTION TITLE ─── */
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 16px 8px;
+    }
+    .section-title h2 { font-size: 18px; font-weight: 800; }
+    .section-title a { font-size: 13px; color: #fa5300; text-decoration: none; }
+
+    /* ─── PRODUCT GRID ─── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 10px;
+      padding: 0 12px 20px;
+    }
+
+    /* ─── PRODUCT CARD ─── */
+    .product-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow .2s, transform .2s;
+      position: relative;
+    }
+    .product-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.13); transform: translateY(-2px); }
+
+    .product-img-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      background: #f9f9f9;
+      overflow: hidden;
+    }
+    .product-img-wrap .product-emoji {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+    }
+    /* Special white pants product gets a CSS illustration */
+    .pants-illustration {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #f0f0f0 0%, #e8e8e8 100%);
+    }
+    .pants-svg { width: 65%; height: 65%; }
+
+    .discount-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #fa5300;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+    .wishlist-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(255,255,255,.85);
+      border: none;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .wishlist-btn:hover { background: #fff; }
+
+    .product-info { padding: 8px 10px 10px; }
+    .product-name {
+      font-size: 13px;
+      color: #333;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.35;
+      min-height: 35px;
+    }
+    .product-name.featured { font-weight: 700; font-size: 14px; }
+    .price-row { display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+    .price-now { font-size: 17px; font-weight: 900; color: #fa5300; }
+    .price-now.featured { font-size: 20px; }
+    .price-old { font-size: 12px; color: #aaa; text-decoration: line-through; }
+    .sold-bar-wrap { margin-top: 6px; }
+    .sold-label { font-size: 10px; color: #888; margin-bottom: 2px; }
+    .sold-bar { background: #f0f0f0; border-radius: 4px; height: 5px; overflow: hidden; }
+    .sold-fill { background: linear-gradient(90deg, #fa5300, #f5a623); height: 100%; border-radius: 4px; }
+    .stars { color: #f5a623; font-size: 11px; margin-top: 4px; }
+    .add-cart-btn {
+      width: 100%;
+      margin-top: 8px;
+      background: #fa5300;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 0;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .add-cart-btn:hover { background: #e04a00; }
+    .free-ship { font-size: 10px; color: #27ae60; font-weight: 700; margin-top: 4px; }
+
+    /* ─── FEATURED PRODUCT (PANTS) ─── */
+    .featured-card {
+      background: #fff;
+      border-radius: 12px;
+      margin: 0 12px 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(250,83,0,.15);
+      border: 2px solid #fa5300;
+      cursor: pointer;
+      transition: box-shadow .2s;
+    }
+    .featured-card:hover { box-shadow: 0 8px 28px rgba(250,83,0,.25); }
+    .featured-inner {
+      display: flex;
+      gap: 0;
+    }
+    .featured-img {
+      width: 180px;
+      min-height: 180px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .featured-img svg { width: 110px; height: 140px; }
+    .featured-label {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #fa5300;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+    .featured-details {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-details h3 { font-size: 16px; font-weight: 800; color: #222; line-height: 1.4; }
+    .featured-details .desc { font-size: 12px; color: #777; margin: 6px 0 10px; line-height: 1.5; }
+    .featured-price-big { font-size: 28px; font-weight: 900; color: #fa5300; }
+    .featured-price-old { font-size: 13px; color: #aaa; text-decoration: line-through; margin-left: 8px; }
+    .feature-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+    .feature-tag {
+      background: #fff3ee;
+      color: #fa5300;
+      border: 1px solid #ffc9a8;
+      border-radius: 12px;
+      font-size: 11px;
+      padding: 2px 8px;
+    }
+    .featured-add-btn {
+      background: #fa5300;
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      padding: 10px 28px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+    .featured-add-btn:hover { background: #e04a00; }
+
+    /* ─── TOAST ─── */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #333;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 24px;
+      font-size: 14px;
+      transition: transform .3s;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #222;
+      color: #aaa;
+      padding: 24px 20px;
+      text-align: center;
+      font-size: 12px;
+      margin-top: 24px;
+    }
+    footer a { color: #fa5300; text-decoration: none; }
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 12px; }
+
+    /* ─── CART BUBBLE ─── */
+    #cart-bubble {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      background: #fa5300;
+      color: #fff;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 14px rgba(250,83,0,.5);
+      cursor: pointer;
+      z-index: 200;
+    }
+    #cart-count {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #fff;
+      color: #fa5300;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 500px) {
+      .hero { padding: 18px 16px; flex-direction: column; text-align: center; }
+      .hero-image { font-size: 60px; }
+      .featured-inner { flex-direction: column; }
+      .featured-img { width: 100%; min-height: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <div class="header-top">
+    <a class="logo" href="#">temu</a>
+    <div class="search-bar">
+      <input type="text" placeholder="Artikel suchen..." />
+      <button>🔍</button>
+    </div>
+    <div class="header-icons">
+      <span title="Anmelden">👤</span>
+      <span title="Wunschliste">🤍</span>
+      <span title="Warenkorb" onclick="openCart()">🛒</span>
+    </div>
+  </div>
+  <nav class="header-nav">
+    <a href="#">Alle Kategorien</a>
+    <a href="#">Flash Sale ⚡</a>
+    <a href="#">Neu eingetroffen</a>
+    <a href="#">Mode</a>
+    <a href="#">Elektronik</a>
+    <a href="#">Haushalt</a>
+    <a href="#">Beauty</a>
+    <a href="#">Sport</a>
+    <a href="#">Spielzeug</a>
+    <a href="#">Gutscheine</a>
+  </nav>
+</header>
+
+<!-- ═══════════════ BANNER ═══════════════ -->
+<div class="banner">
+  🎉 Kostenloser Versand ab 15 € Bestellwert &nbsp;|&nbsp; Bis zu 90 % Rabatt &nbsp;|&nbsp; 30 Tage Rückgabe
+  <span>Jetzt shoppen</span>
+</div>
+
+<!-- ═══════════════ PROMO STRIP ═══════════════ -->
+<div class="promo-strip">
+  <div><span class="icon">🚚</span> Kostenloser Versand</div>
+  <div><span class="icon">🔒</span> Sicheres Bezahlen</div>
+  <div><span class="icon">↩️</span> 30 Tage Rückgabe</div>
+  <div><span class="icon">⭐</span> Millionen Bewertungen</div>
+  <div><span class="icon">💳</span> Ratenzahlung möglich</div>
+</div>
+
+<!-- ═══════════════ CATEGORY BAR ═══════════════ -->
+<div class="category-bar">
+  <div class="cat-item active"><span class="cat-icon">🏠</span>Start</div>
+  <div class="cat-item"><span class="cat-icon">👗</span>Mode</div>
+  <div class="cat-item"><span class="cat-icon">👟</span>Schuhe</div>
+  <div class="cat-item"><span class="cat-icon">💄</span>Beauty</div>
+  <div class="cat-item"><span class="cat-icon">📱</span>Elektronik</div>
+  <div class="cat-item"><span class="cat-icon">🏡</span>Haushalt</div>
+  <div class="cat-item"><span class="cat-icon">🌿</span>Garten</div>
+  <div class="cat-item"><span class="cat-icon">🎮</span>Spielzeug</div>
+  <div class="cat-item"><span class="cat-icon">🐾</span>Haustiere</div>
+  <div class="cat-item"><span class="cat-icon">🏋️</span>Sport</div>
+  <div class="cat-item"><span class="cat-icon">🍳</span>Küche</div>
+  <div class="cat-item"><span class="cat-icon">🎒</span>Taschen</div>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <div class="hero-text">
+    <h1>Bis zu 90 % Rabatt 🔥</h1>
+    <p>Millionen Produkte direkt vom Hersteller</p>
+    <button class="btn-orange">Jetzt entdecken</button>
+    <div class="hero-badges">
+      <span class="badge">⚡ Flash Sale</span>
+      <span class="badge yellow">🎁 Täglich neue Deals</span>
+      <span class="badge green">✅ Kostenloser Versand</span>
+    </div>
+  </div>
+  <div class="hero-image">🛍️</div>
+</div>
+
+<!-- ═══════════════ FEATURED PRODUCT: WEISSE HOSE ═══════════════ -->
+<div class="section-title">
+  <h2>⭐ Empfohlen für dich</h2>
+  <a href="#">Alle anzeigen →</a>
+</div>
+
+<div class="featured-card" onclick="addToCart('Weiße Hose mit Taschen')">
+  <div class="featured-inner">
+    <div class="featured-img">
+      <span class="featured-label">-43 % RABATT</span>
+      <!-- Weiße Hose SVG Illustration -->
+      <svg viewBox="0 0 110 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bund -->
+        <rect x="18" y="8" width="74" height="16" rx="4" fill="#e0e0e0" stroke="#ccc" stroke-width="1.2"/>
+        <!-- Gürtelschlaufen -->
+        <rect x="28" y="6" width="8" height="5" rx="2" fill="#ccc"/>
+        <rect x="50" y="5" width="10" height="6" rx="2" fill="#ccc"/>
+        <rect x="74" y="6" width="8" height="5" rx="2" fill="#ccc"/>
+        <!-- Linkes Bein -->
+        <path d="M18 22 L18 120 Q18 132 32 132 L50 132 L55 22 Z" fill="#f0f0f0" stroke="#ddd" stroke-width="1.2"/>
+        <!-- Rechtes Bein -->
+        <path d="M92 22 L92 120 Q92 132 78 132 L60 132 L55 22 Z" fill="#f0f0f0" stroke="#ddd" stroke-width="1.2"/>
+        <!-- Mittelnaht -->
+        <line x1="55" y1="22" x2="55" y2="60" stroke="#ccc" stroke-width="1" stroke-dasharray="3 2"/>
+        <!-- Linke Tasche -->
+        <rect x="22" y="28" width="22" height="18" rx="3" fill="#e8e8e8" stroke="#ccc" stroke-width="1"/>
+        <text x="27" y="40" font-size="8" fill="#aaa">🜁</text>
+        <!-- Rechte Tasche -->
+        <rect x="66" y="28" width="22" height="18" rx="3" fill="#e8e8e8" stroke="#ccc" stroke-width="1"/>
+        <!-- Taschendetail -->
+        <line x1="22" y1="36" x2="44" y2="36" stroke="#bbb" stroke-width=".8"/>
+        <line x1="66" y1="36" x2="88" y2="36" stroke="#bbb" stroke-width=".8"/>
+        <!-- Reißverschluss -->
+        <line x1="50" y1="10" x2="60" y2="10" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="55" cy="10" r="2" fill="#aaa"/>
+        <!-- Knopf -->
+        <circle cx="55" cy="18" r="2.5" fill="#ccc" stroke="#bbb" stroke-width=".8"/>
+        <!-- Saum links -->
+        <line x1="20" y1="128" x2="48" y2="130" stroke="#ccc" stroke-width="1"/>
+        <!-- Saum rechts -->
+        <line x1="62" y1="130" x2="90" y2="128" stroke="#ccc" stroke-width="1"/>
+        <!-- Schatten -->
+        <ellipse cx="55" cy="134" rx="30" ry="4" fill="rgba(0,0,0,0.06)"/>
+      </svg>
+    </div>
+    <div class="featured-details">
+      <h3>Damen Hose Weiß mit Taschen – Slim Fit, Stretch</h3>
+      <div class="desc">
+        ✅ Weiß &nbsp;|&nbsp; 🪡 Hochwertiges Stretch-Material<br>
+        👜 2 Seitentaschen + 1 Gesäßtasche<br>
+        📏 Verfügbar in S, M, L, XL, XXL<br>
+        🌸 Perfekt für Alltag & Freizeit
+      </div>
+      <div>
+        <span class="featured-price-big">€19,99</span>
+        <span class="featured-price-old">€34,99</span>
+      </div>
+      <div class="feature-tags">
+        <span class="feature-tag">🚚 Gratis Versand</span>
+        <span class="feature-tag">↩️ 30 Tage Rückgabe</span>
+        <span class="feature-tag">⭐ 4,8 / 5</span>
+        <span class="feature-tag">🔥 1.247 verkauft</span>
+      </div>
+      <button class="featured-add-btn">🛒 In den Warenkorb</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PRODUCT GRID ═══════════════ -->
+<div class="section-title">
+  <h2>🔥 Flash Sale – Nur heute!</h2>
+  <a href="#">Alle ansehen →</a>
+</div>
+
+<div class="product-grid">
+
+  <!-- 1 -->
+  <div class="product-card" onclick="addToCart('Sommertop')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">👚</div>
+      <span class="discount-badge">-60%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Damen Sommer Top Blumenmuster</div>
+      <div class="price-row">
+        <span class="price-now">€4,99</span>
+        <span class="price-old">€12,99</span>
+      </div>
+      <div class="stars">★★★★★ (823)</div>
+      <div class="free-ship">✅ Gratis Versand</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="product-card" onclick="addToCart('Sneaker')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">👟</div>
+      <span class="discount-badge">-55%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Sneaker Herren Leicht Sportschuh</div>
+      <div class="price-row">
+        <span class="price-now">€11,99</span>
+        <span class="price-old">€26,99</span>
+      </div>
+      <div class="sold-bar-wrap">
+        <div class="sold-label">78 % verkauft</div>
+        <div class="sold-bar"><div class="sold-fill" style="width:78%"></div></div>
+      </div>
+      <div class="stars">★★★★☆ (2.104)</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="product-card" onclick="addToCart('Smartwatch')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">⌚</div>
+      <span class="discount-badge">-70%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Smartwatch mit Herzfrequenz & Schrittzähler</div>
+      <div class="price-row">
+        <span class="price-now">€8,99</span>
+        <span class="price-old">€29,99</span>
+      </div>
+      <div class="sold-bar-wrap">
+        <div class="sold-label">91 % verkauft</div>
+        <div class="sold-bar"><div class="sold-fill" style="width:91%"></div></div>
+      </div>
+      <div class="stars">★★★★★ (5.672)</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="product-card" onclick="addToCart('Haartrockner')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">💨</div>
+      <span class="discount-badge">-45%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Mini Haartrockner Reisegröße 1200W</div>
+      <div class="price-row">
+        <span class="price-now">€6,49</span>
+        <span class="price-old">€11,99</span>
+      </div>
+      <div class="stars">★★★★☆ (411)</div>
+      <div class="free-ship">✅ Gratis Versand</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <div class="product-card" onclick="addToCart('Leggings')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">🩱</div>
+      <span class="discount-badge">-50%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Sport Leggings High Waist Push-Up</div>
+      <div class="price-row">
+        <span class="price-now">€7,99</span>
+        <span class="price-old">€15,99</span>
+      </div>
+      <div class="sold-bar-wrap">
+        <div class="sold-label">64 % verkauft</div>
+        <div class="sold-bar"><div class="sold-fill" style="width:64%"></div></div>
+      </div>
+      <div class="stars">★★★★★ (3.291)</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <!-- 6 -->
+  <div class="product-card" onclick="addToCart('Bluetooth Kopfhörer')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">🎧</div>
+      <span class="discount-badge">-65%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Bluetooth Kopfhörer Over-Ear Noise Cancel</div>
+      <div class="price-row">
+        <span class="price-now">€13,99</span>
+        <span class="price-old">€39,99</span>
+      </div>
+      <div class="stars">★★★★☆ (1.882)</div>
+      <div class="free-ship">✅ Gratis Versand</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="product-card" onclick="addToCart('Handtasche')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">👜</div>
+      <span class="discount-badge">-40%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Damen Handtasche Schultertasche PU-Leder</div>
+      <div class="price-row">
+        <span class="price-now">€9,99</span>
+        <span class="price-old">€16,99</span>
+      </div>
+      <div class="stars">★★★★★ (742)</div>
+      <div class="free-ship">✅ Gratis Versand</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="product-card" onclick="addToCart('Sonnencreme')">
+    <div class="product-img-wrap">
+      <div class="product-emoji">🧴</div>
+      <span class="discount-badge">-35%</span>
+      <button class="wishlist-btn">🤍</button>
+    </div>
+    <div class="product-info">
+      <div class="product-name">Sonnencreme SPF 50+ Gesicht & Körper</div>
+      <div class="price-row">
+        <span class="price-now">€3,99</span>
+        <span class="price-old">€6,49</span>
+      </div>
+      <div class="sold-bar-wrap">
+        <div class="sold-label">55 % verkauft</div>
+        <div class="sold-bar"><div class="sold-fill" style="width:55%"></div></div>
+      </div>
+      <div class="stars">★★★★☆ (598)</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════ MEHR PRODUKTE ═══════════════ -->
+<div class="section-title">
+  <h2>🛍️ Mehr für dich entdecken</h2>
+  <a href="#">Alle ansehen →</a>
+</div>
+
+<div class="product-grid">
+
+  <div class="product-card" onclick="addToCart('Küchenmesser Set')">
+    <div class="product-img-wrap"><div class="product-emoji">🔪</div>
+    <span class="discount-badge">-52%</span><button class="wishlist-btn">🤍</button></div>
+    <div class="product-info">
+      <div class="product-name">Profi Küchenmesser 5er Set Edelstahl</div>
+      <div class="price-row"><span class="price-now">€12,99</span><span class="price-old">€27,00</span></div>
+      <div class="stars">★★★★★ (2.031)</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card" onclick="addToCart('Yogamatte')">
+    <div class="product-img-wrap"><div class="product-emoji">🧘</div>
+    <span class="discount-badge">-48%</span><button class="wishlist-btn">🤍</button></div>
+    <div class="product-info">
+      <div class="product-name">Yogamatte rutschfest 6mm dick Pink</div>
+      <div class="price-row"><span class="price-now">€8,49</span><span class="price-old">€16,99</span></div>
+      <div class="stars">★★★★☆ (989)</div>
+      <div class="free-ship">✅ Gratis Versand</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card" onclick="addToCart('Lichterkette')">
+    <div class="product-img-wrap"><div class="product-emoji">✨</div>
+    <span class="discount-badge">-62%</span><button class="wishlist-btn">🤍</button></div>
+    <div class="product-info">
+      <div class="product-name">LED Lichterkette 10m warmweiß innen & außen</div>
+      <div class="price-row"><span class="price-now">€4,49</span><span class="price-old">€11,99</span></div>
+      <div class="stars">★★★★★ (4.411)</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+  <div class="product-card" onclick="addToCart('Pflanzentopf Set')">
+    <div class="product-img-wrap"><div class="product-emoji">🪴</div>
+    <span class="discount-badge">-30%</span><button class="wishlist-btn">🤍</button></div>
+    <div class="product-info">
+      <div class="product-name">Keramik Pflanzentöpfe 3er Set Modern</div>
+      <div class="price-row"><span class="price-now">€10,99</span><span class="price-old">€15,99</span></div>
+      <div class="stars">★★★★☆ (321)</div>
+      <button class="add-cart-btn">+ Warenkorb</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-links">
+    <a href="#">Über uns</a>
+    <a href="#">Datenschutz</a>
+    <a href="#">AGB</a>
+    <a href="#">Impressum</a>
+    <a href="#">Hilfe & FAQ</a>
+    <a href="#">Versandinformationen</a>
+    <a href="#">Rückgabe & Erstattung</a>
+    <a href="#">Affiliate Programm</a>
+  </div>
+  <p>© 2024 Temu-Klon Demo. Alle Rechte vorbehalten. | Preise inkl. MwSt.</p>
+  <p style="margin-top:6px;">💳 PayPal &nbsp;|&nbsp; Kreditkarte &nbsp;|&nbsp; Klarna &nbsp;|&nbsp; Sofort &nbsp;|&nbsp; Apple Pay &nbsp;|&nbsp; Google Pay</p>
+</footer>
+
+<!-- ═══════════════ CART BUBBLE ═══════════════ -->
+<div id="cart-bubble" onclick="openCart()">
+  🛒
+  <div id="cart-count">0</div>
+</div>
+
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div id="toast">✅ Zum Warenkorb hinzugefügt</div>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+  let cartCount = 0;
+
+  function addToCart(name) {
+    cartCount++;
+    document.getElementById('cart-count').textContent = cartCount;
+    const toast = document.getElementById('toast');
+    toast.textContent = '✅ "' + name + '" zum Warenkorb hinzugefügt';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  function openCart() {
+    if (cartCount === 0) {
+      alert('Dein Warenkorb ist leer.\nFüge Produkte hinzu um fortzufahren!');
+    } else {
+      alert('🛒 Du hast ' + cartCount + ' Artikel im Warenkorb.\n\nGesamtsumme: Bitte zur Kasse gehen.');
+    }
+  }
+
+  // Category bar active state
+  document.querySelectorAll('.cat-item').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.cat-item').forEach(c => c.classList.remove('active'));
+      el.classList.add('active');
+    });
+  });
+
+  // Wishlist toggle
+  document.querySelectorAll('.wishlist-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      btn.textContent = btn.textContent === '🤍' ? '❤️' : '🤍';
+    });
+  });
+</script>
+
+</body>
+</html>
